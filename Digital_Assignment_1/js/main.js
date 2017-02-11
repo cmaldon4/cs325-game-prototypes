@@ -19,7 +19,7 @@ var BasicGame = function (game) {};
 
 BasicGame.Boot = function (game) {};
 
-var timer, timerEvent, text, sprite, bullets, asteroids, circle, circleSprite;
+var timer, timerEvent, text, sprite, bullets, asteroids, circle, circleSprite, audio;
 var fireRate = 100; 
 var nextFire = 0;
 
@@ -39,11 +39,14 @@ BasicGame.Boot.prototype =
         game.load.image('asteroid', 'assets/asteroid.png');
         
         game.load.image('circle', 'assets/circle.png');
+        game.load.audio('audio', ['assets/OmegaSector.mp3', 'assets/OmegaSector.ogg']);
         
     },
     
     create: function () 
     {
+    	audio = game.add.audio('audio');
+    	audio.play();
     	var background = game.add.sprite( 0, 0, 'background' );
         var sprite1 = game.add.sprite(0,0, 'cowboy' );
         sprite1.alignIn(background, Phaser.BOTTOM_LEFT, -50, -200);
@@ -156,7 +159,7 @@ BasicGame.Boot.prototype =
         }
         else 
         {
-            game.debug.text("You made it! < 3", 2, 14, "#0f0");
+            game.debug.text("Game Over! Earth is destroyed!", 2, 14, "#0f0");
         }
     },
     endTimer: function() 
