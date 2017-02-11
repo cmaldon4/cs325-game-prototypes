@@ -13,21 +13,173 @@ window.onload = function() {
     
     "use strict";
     
-    var game = new Phaser.Game( 550, 550, Phaser.AUTO, 'game', { preload: preload, create: create} );
-    
-    function preload() {
+var game = new Phaser.Game(550, 550, Phaser.AUTO, 'game', false, false, false);
+
+var BasicGame = function (game) {};
+
+BasicGame.Boot = function (game) {};
+
+var timer, timerEvent, text, sprite, bullets, asteroids, circle, circleSprite;
+var fireRate = 100; 
+var nextFire = 0;
+
+function hitSprite(sprite)
+{
+	sprite.destroy();
+}
+
+BasicGame.Boot.prototype = 
+{
+    preload: function () 
+    {
         game.load.image( 'background', 'assets/Earth.png' );
         game.load.image( 'cowboy', 'assets/cowboy.png' );
-    }
+        game.load.image('gun', 'assets/gun.png'); 
+        game.load.image('bullet', 'assets/bullet.png');
+        game.load.image('asteroid', 'assets/asteroid.png');
+        
+        
+        
+    },
     
-    
-    function create() {
-        // Create a sprite at the center of the screen using the 'logo' image.
-        var background = game.add.sprite( 0, 0, 'background' );
+    create: function () 
+    {
+    	var background = game.add.sprite( 0, 0, 'background' );
         var sprite1 = game.add.sprite(0,0, 'cowboy' );
         sprite1.alignIn(background, Phaser.BOTTOM_LEFT, -50, -200);
+        // Create a custom timer
+        timer = game.time.create();
+        
+        // Create a delayed event 1m and 30s from now
+        timerEvent = timer.add(Phaser.Timer.MINUTE * 2, this.endTimer, this);
+        
+        // Start the timer
+        timer.start();
+        game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    }
+		//game.stage.backgroundColor = '#313131';
+	
+		bullets = game.add.group();
+		bullets.enableBody = true;
+		bullets.physicsBodyType = Phaser.Physics.ARCADE;
+	
+		bullets.createMultiple(50, 'bullet');
+		bullets.setAll('checkWorldBounds', true);
+		bullets.setAll('outOfBoundsKill', true);
+				
+		sprite = game.add.sprite(130, 300, 'gun');
+		sprite.anchor.set(0.5);
+	
+		game.physics.enable(sprite, Phaser.Physics.ARCADE);
+	
+		sprite.body.allowRotation = false;
+		
+		asteroids = game.add.group();
+		asteroids.enableBody = true;
+		asteroids.physicsBodyType = Phaser.Physics.ARCADE;
+			
+		var delay = 0;
+		for (var i = 0; i < 40; i++)
+		{
+			var sprite2 = game.add.sprite(550, 0, 'asteroid');
+	
+			sprite2.scale.set(game.rnd.realInRange(0.1, 0.6));
+			
+			game.physics.enable(sprite2, Phaser.Physics.ARCADE);
+	
+			sprite2.body.onCollide = new Phaser.Signal();
+			
+			sprite2.body.onCollide.add(function(sprite2){hitSprite(sprite2);}, this);
+			
+			var speed = game.rnd.between(10000, 15000);
+	
+			game.add.tween(sprite2).to({ x: game.rnd.between(0,225), y: game.rnd.between(350, 550) }, speed, Phaser.Easing.Sinusoidal.InOut, true, delay, 1000, false);
+			
+			delay += 1000;
+			
+			asteroids.add(sprite2);
+		}
+		
+		
+		circle = game.add.bitmapData(299, 299);
+		circle.ctx.beginPath();
+		//circle.ctx.arc(300, 200, 100, 0, Math.PI*2, true);
+		circle.ctx.fillStyle = '#000000'//'rgba(255,255,255, 0.5)';
+		circle.ctx.fill();
+		/*
+		circle = game.add.graphics(299, 299);
+		circle.lineStyle(0);
+		circle.beginFill('rgba(255,255,255, 0.5)', 0.5);
+		circle.drawCircle(299, 299, 299);
+		circle.endFill();
+		*/
+		circleSprite = game.add.sprite(78, 500, circle);
+		game.physics.enable(circleSprite, Phaser.Physics.ARCADE);
+		circleSprite.body.setCircle(299);
+        circleSprite.body.onCollide = new Phaser.Signal();
+		circleSprite.body.onCollide.add(function(circleSprite){this.hitEarth(circleSprite);}, this);
+    },
     
+    update: function () 
+    {
+		sprite.rotation = game.physics.arcade.angleToPointer(sprite);
+	
+		if (game.input.activePointer.isDown)
+		{
+			if (game.time.now > nextFire && bullets.countDead() > 0)
+			{
+				nextFire = game.time.now + fireRate;
+		
+				var bullet = bullets.getFirstDead();
+		
+				bullet.reset(sprite.x - 8, sprite.y - 8);
+		
+				game.physics.arcade.moveToPointer(bullet, 400);
+				
+				//game.physics.arcade.collide(this.bullets, this.asteroids);
+			}
+		}
+
+		game.physics.arcade.collide(bullets, asteroids);
+		game.physics.arcade.collide(asteroids, circle);
+    },
+    
+	
+    render: function () 
+    {
+        // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
+        if (timer.running) 
+        {
+        	//game.debug.geom(circle,'rgba(255,255,255, 0.5)');
+            game.debug.text(this.formatTime(Math.round((timerEvent.delay - timer.ms) / 1000)), 2, 14, "#ff0");
+        }
+        else 
+        {
+            game.debug.text("Game Over!", 2, 14, "#0f0");
+        }
+    },
+    endTimer: function() 
+    {
+        // Stop the timer when the delayed event triggers
+        timer.stop();
+    },
+    formatTime: function(s) 
+    {
+        // Convert seconds (s) to a nicely formatted and padded time string
+        var minutes = "0" + Math.floor(s / 60);
+        var seconds = "0" + (s - minutes * 60);
+        return minutes.substr(-2) + ":" + seconds.substr(-2);   
+    },
+    hitEarth: function()
+    {
+    	this.endTimer();
+    	
+    	game.debug.text("Game Over!", 2, 14, "#0f0");
+    }
+    	
+}
+
+game.state.add('Boot', BasicGame.Boot);
+game.state.start('Boot');
 
 };
