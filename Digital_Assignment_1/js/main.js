@@ -159,7 +159,7 @@ BasicGame.Boot.prototype =
         }
         else 
         {
-            game.debug.text("Game Over! Earth is destroyed!", 2, 14, "#0f0");
+            game.debug.text("Game Over!" , 2, 14, "#0f0");
         }
     },
     endTimer: function() 
@@ -178,7 +178,7 @@ BasicGame.Boot.prototype =
     {
     	console.log("HIT EARTH!!!");
     	this.endTimer();
-    	game.debug.text("Game Over! Earth is destroyed!", 2, 14, "#0f0");
+    	game.debug.text("Game Over!", 2, 14, "#0f0");
     }
     	
 }
