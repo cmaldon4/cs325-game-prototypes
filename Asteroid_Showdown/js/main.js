@@ -50,6 +50,8 @@ BasicGame.Boot.prototype =
     	var background = game.add.sprite( 0, 0, 'background' );
         var sprite1 = game.add.sprite(0,0, 'cowboy' );
         sprite1.alignIn(background, Phaser.BOTTOM_LEFT, -50, -200);
+        
+        //Timer From Lewis Lane
         // Create a custom timer
         timer = game.time.create();
         
@@ -62,6 +64,8 @@ BasicGame.Boot.prototype =
 
 		//game.stage.backgroundColor = '#313131';
 	
+		
+		//borrowed from phaser active bullets example
 		bullets = game.add.group();
 		bullets.enableBody = true;
 		bullets.physicsBodyType = Phaser.Physics.ARCADE;
@@ -81,6 +85,7 @@ BasicGame.Boot.prototype =
 		asteroids.enableBody = true;
 		asteroids.physicsBodyType = Phaser.Physics.ARCADE;
 			
+		//borrowed from phaser on collide example
 		var delay = 0;
 		for (var i = 0; i < 40; i++)
 		{
@@ -116,6 +121,8 @@ BasicGame.Boot.prototype =
 		circle.drawCircle(299, 299, 299);
 		circle.endFill();
 		*/
+		
+		//borrowed from circle phaser example/basic image
 		circleSprite = game.add.sprite(-133, 350, 'circle');
 		game.physics.enable(circleSprite, Phaser.Physics.ARCADE);
 		circleSprite.alpha = 0;
@@ -124,6 +131,7 @@ BasicGame.Boot.prototype =
 		circleSprite.body.onCollide.add(function(circleSprite){this.hitEarth(circleSprite);}, this);
     },
     
+    //borrowed mainly from on collid and active bullets from phaser examples
     update: function () 
     {
 		sprite.rotation = game.physics.arcade.angleToPointer(sprite);
@@ -148,7 +156,7 @@ BasicGame.Boot.prototype =
 		game.physics.arcade.collide(asteroids, circleSprite);
     },
     
-	
+	//timer example from Lewis Lane
     render: function () 
     {
         // If our timer is running, show the time in a nicely formatted way, else show 'Done!'
@@ -174,6 +182,7 @@ BasicGame.Boot.prototype =
         var seconds = "0" + (s - minutes * 60);
         return minutes.substr(-2) + ":" + seconds.substr(-2);   
     },
+    
     hitEarth: function()
     {
     	console.log("HIT EARTH!!!");
@@ -183,6 +192,7 @@ BasicGame.Boot.prototype =
     	
 }
 
+//Lewis Lane Timer Example
 game.state.add('Boot', BasicGame.Boot);
 game.state.start('Boot');
 
