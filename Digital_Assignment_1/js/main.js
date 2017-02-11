@@ -38,7 +38,7 @@ BasicGame.Boot.prototype =
         game.load.image('bullet', 'assets/bullet.png');
         game.load.image('asteroid', 'assets/asteroid.png');
         
-        
+        game.load.image('circle', 'assets/circle.png');
         
     },
     
@@ -63,7 +63,7 @@ BasicGame.Boot.prototype =
 		bullets.enableBody = true;
 		bullets.physicsBodyType = Phaser.Physics.ARCADE;
 	
-		bullets.createMultiple(50, 'bullet');
+		bullets.createMultiple(75, 'bullet');
 		bullets.setAll('checkWorldBounds', true);
 		bullets.setAll('outOfBoundsKill', true);
 				
@@ -91,7 +91,7 @@ BasicGame.Boot.prototype =
 			
 			sprite2.body.onCollide.add(function(sprite2){hitSprite(sprite2);}, this);
 			
-			var speed = game.rnd.between(10000, 15000);
+			var speed = game.rnd.between(5000, 15000);
 	
 			game.add.tween(sprite2).to({ x: game.rnd.between(0,225), y: game.rnd.between(350, 550) }, speed, Phaser.Easing.Sinusoidal.InOut, true, delay, 1000, false);
 			
@@ -100,22 +100,23 @@ BasicGame.Boot.prototype =
 			asteroids.add(sprite2);
 		}
 		
-		
+		/*
 		circle = game.add.bitmapData(299, 299);
 		circle.ctx.beginPath();
-		//circle.ctx.arc(300, 200, 100, 0, Math.PI*2, true);
+		circle.ctx.arc(300, 200, 100, 0, Math.PI*2, true);
 		circle.ctx.fillStyle = '#000000'//'rgba(255,255,255, 0.5)';
 		circle.ctx.fill();
-		/*
+		
 		circle = game.add.graphics(299, 299);
-		circle.lineStyle(0);
-		circle.beginFill('rgba(255,255,255, 0.5)', 0.5);
+		circle.lineStyle(1);
+		circle.beginFill(0x000000, 0.5);
 		circle.drawCircle(299, 299, 299);
 		circle.endFill();
 		*/
-		circleSprite = game.add.sprite(78, 500, circle);
+		circleSprite = game.add.sprite(-133, 350, 'circle');
 		game.physics.enable(circleSprite, Phaser.Physics.ARCADE);
-		circleSprite.body.setCircle(299);
+		circleSprite.alpha = 0;
+		circleSprite.body.setCircle(200);//299
         circleSprite.body.onCollide = new Phaser.Signal();
 		circleSprite.body.onCollide.add(function(circleSprite){this.hitEarth(circleSprite);}, this);
     },
@@ -132,16 +133,16 @@ BasicGame.Boot.prototype =
 		
 				var bullet = bullets.getFirstDead();
 		
-				bullet.reset(sprite.x - 8, sprite.y - 8);
+				bullet.reset(sprite.x - 10, sprite.y - 10);
 		
-				game.physics.arcade.moveToPointer(bullet, 400);
+				game.physics.arcade.moveToPointer(bullet, 300);
 				
 				//game.physics.arcade.collide(this.bullets, this.asteroids);
 			}
 		}
 
 		game.physics.arcade.collide(bullets, asteroids);
-		game.physics.arcade.collide(asteroids, circle);
+		game.physics.arcade.collide(asteroids, circleSprite);
     },
     
 	
@@ -155,7 +156,7 @@ BasicGame.Boot.prototype =
         }
         else 
         {
-            game.debug.text("Game Over!", 2, 14, "#0f0");
+            game.debug.text("You made it! < 3", 2, 14, "#0f0");
         }
     },
     endTimer: function() 
@@ -172,9 +173,9 @@ BasicGame.Boot.prototype =
     },
     hitEarth: function()
     {
+    	console.log("HIT EARTH!!!");
     	this.endTimer();
-    	
-    	game.debug.text("Game Over!", 2, 14, "#0f0");
+    	game.debug.text("Game Over! Earth is destroyed!", 2, 14, "#0f0");
     }
     	
 }
