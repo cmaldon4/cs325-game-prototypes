@@ -13,18 +13,19 @@ window.onload = function() {
     
     "use strict";
     
-    var game = new Phaser.Game( 800, 586, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
+    var game = new Phaser.Game( 800, 1097, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
     function preload() {
         // Load an image and call it 'logo'.
-        game.load.image( 'background', 'assets/heartbackground.png' );
+        game.load.image( 'background', 'assets/background.png' );
+        game.load.image( 'heart', 'assets/heart.png');
     }
     
-    var bouncy;
+    var background;
     
     function create() {
         // Create a sprite at the center of the screen using the 'logo' image.
-        bouncy = game.add.sprite( 0, 0, 'background' );
+        background = game.add.sprite( 0, 0, 'background' );
 
     }
     
