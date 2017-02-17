@@ -26,20 +26,57 @@ window.onload = function() {
     var background;
     var heart; 
     var hand; 
+    var leftKey; 
+    var rightKey; 
+    var downKey; 
     
     function create() {
+    	game.physics.startSystem(Phaser.Physics.ARCADE);
+    	
+    	hand = game.add.group(); 
+    	
+    	hand.enableBody = true; 
+    	hand.physicsBodyType = Phaser.Physics.ARCADE; 
+    	hand.setAll('checkWorldBounds', true); 
+    	
         // Create a sprite at the center of the screen using the 'logo' image.
         background = game.add.sprite( 0, 0, 'background' );
         heart = game.add.sprite(0, 0, 'heart');
-        hand = game.add.sprite(50, 0, 'hand');
+        //hand = game.add.sprite(200, 200, 'hand');
         //hand.alpha = 0; 
+        
+        game.physics.enable(heart, Phaser.Physics.ARCADE);
+        
+        this.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        this.rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        this.downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        
+        game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.Right, Phaser.Keyboard.Down ]);
+        
+        
+
+        
 
     }
     
     function update() 
     {
-
+    	heart.body.velocity.x = 0;
+    	heart.body.velocity.y = 0;
     	
+    	if (this.leftKey.isDown)
+    	{
+    		heart.body.velocity.x = -200; 
+    	}
+    	
+    	if (this.rightKey.isDown)
+    	{
+    		heart.body.velocity.x = 200;
+    	}
+    	
+    	if (this.downKey.isDown)
+    	{
+    	}
 
     	
     	
