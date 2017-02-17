@@ -13,23 +13,62 @@ window.onload = function() {
     
     "use strict";
     
-    var game = new Phaser.Game( 800, 1097, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
+    var game = new Phaser.Game( 500, 686, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
     function preload() {
         // Load an image and call it 'logo'.
         game.load.image( 'background', 'assets/background.png' );
         game.load.image( 'heart', 'assets/heart.png');
+       
     }
     
     var background;
+    var cursor; 
     
     function create() {
         // Create a sprite at the center of the screen using the 'logo' image.
         background = game.add.sprite( 0, 0, 'background' );
+        cursor = game.add.sprite(0, 0, 'heart');
+        game.physics.enable(cursor, Phaser.Physics.ARCADE);
 
     }
     
-    function update() {
+    function update() 
+    {
+    if(game.input.mousePointer.isUp)
+    {
+    	game.physics.arcade.moveToPointer(cursor, 400);
+    	
+    	if(Phaser.Rectangle.contains(cursor.body, game.input.x, game.input.y))
+    	{
+    		cursor.body.velocity.setTo(0, 0);
+    	}
+    	else
+    	{
+    		cursor.body.velocity.setTo(0, 0);
+    	}
+    }
+    	
 
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     }
 };
