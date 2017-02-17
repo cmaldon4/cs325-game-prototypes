@@ -26,33 +26,39 @@ window.onload = function() {
     var background;
     var heart; 
     var hand; 
-    var leftKey; 
-    var rightKey; 
-    var downKey; 
+    var cursors; 
     
     function create() {
-    	game.physics.startSystem(Phaser.Physics.ARCADE);
+    	//game.physics.startSystem(Phaser.Physics.ARCADE);
     	
-    	hand = game.add.group(); 
+    	/*hand = game.add.group(); 
     	
     	hand.enableBody = true; 
     	hand.physicsBodyType = Phaser.Physics.ARCADE; 
-    	hand.setAll('checkWorldBounds', true); 
+    	hand.setAll('checkWorldBounds', true); */
     	
-        // Create a sprite at the center of the screen using the 'logo' image.
-        background = game.add.sprite( 0, 0, 'background' );
+        //background = game.add.sprite( 0, 0, 'background' );
+        game.add.image(0, 0, 'background'); 
+        game.physics.startSystem(Phaser.Physics.P2JS);
+        game.physics.p2.defaultRestitution = 0.8; 
         heart = game.add.sprite(0, 0, 'heart');
+        game.physics.p2.enable(heart);
+        heart.body.setZeroDamping(); 
+        heart.body.fixedRotation = true; 
+
+        
+        //game.physics.startSystem(Phaser.Physics.ARCADE);
+        //game.physics.arcade.gravity.y = 50; 
+        //game.physics.arcade.enable(heart);
+
+        //heart.velocity.y = 200; 
+        //heart.body.velocity.setTo(200, 200);
         //hand = game.add.sprite(200, 200, 'hand');
         //hand.alpha = 0; 
         
-        game.physics.enable(heart, Phaser.Physics.ARCADE);
+
         
-        this.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        this.rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-        this.downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        
-        game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.Right, Phaser.Keyboard.Down ]);
-        
+        cursors = game.input.keyboard.createCursorKeys();
         
 
         
@@ -61,23 +67,25 @@ window.onload = function() {
     
     function update() 
     {
-    	heart.body.velocity.x = 0;
-    	heart.body.velocity.y = 0;
-    	
-    	if (this.leftKey.isDown)
-    	{
-    		heart.body.velocity.x = -200; 
-    	}
-    	
-    	if (this.rightKey.isDown)
-    	{
-    		heart.body.velocity.x = 200;
-    	}
-    	
-    	if (this.downKey.isDown)
-    	{
-    	}
 
+    	
+    	heart.body.setZeroVelocity();
+    	heart.body.velocity.y = 40; 
+
+    	if(cursors.left.isDown)
+    	{
+    		heart.body.moveLeft(400); 
+    		heart.body.velocity.y = 40; 
+
+    	}
+    	
+    	else if (cursors.right.isDown)
+    	{
+    		heart.body.moveRight(400);
+    		heart.body.velocity.y = 40; 
+
+    	}
+    	
     	
     	
     	
