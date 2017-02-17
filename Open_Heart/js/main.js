@@ -20,6 +20,7 @@ window.onload = function() {
         game.load.image( 'background', 'assets/background.png' );
         game.load.image( 'heart', 'assets/heart.png');
         game.load.image( 'hand', 'assets/NurseHand.png');
+        game.load.image( 'target', 'assets/circle.png');
        
     }
     
@@ -27,6 +28,7 @@ window.onload = function() {
     var heart; 
     var hand; 
     var cursors; 
+    var target; 
     
     function create() {
     	//game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -37,14 +39,46 @@ window.onload = function() {
     	hand.physicsBodyType = Phaser.Physics.ARCADE; 
     	hand.setAll('checkWorldBounds', true); */
     	
-        //background = game.add.sprite( 0, 0, 'background' );
         game.add.image(0, 0, 'background'); 
+       
+        
+        
+        //Physics initation
         game.physics.startSystem(Phaser.Physics.P2JS);
+        game.physics.p2.setImpactEvents(true);
         game.physics.p2.defaultRestitution = 0.8; 
+        
+        var targetCollisionGroup = game.physics.p2.createCollisionGroup();
+        var heartCollisionGroup = game.physics.p2.createCollisionGroup();
+        var handCollisionGroup = game.physics.p2.createCollisionGroup();
+        game.physics.p2.updateBoundsCollisionGroup();
+        
+        
+        
+        //set target 
+        
+        var targets = game.add.group();
+        targets.enableBody = true; 
+        targets.physicsBodyType = Phaser.Physics.P2JS;
+        target = targets.create(290, 583, 'target'); 
+        //target = game.add.sprite(290, 583, 'target');
+        game.physics.p2.enable(target);
+        //target = game.add.sprite(290, 583, 'target'); 
+        //game.physics.p2.enable(target, false);
+        target.body.setCircle(40);
+
+        target.body.fixedRotation = true; 
+        target.body.setCollisionGroup(targetCollisionGroup);
+        target.body.collides(heartCollisionGroup);
+        
+        
         heart = game.add.sprite(0, 0, 'heart');
         game.physics.p2.enable(heart);
         heart.body.setZeroDamping(); 
         heart.body.fixedRotation = true; 
+        heart.body.setCollisionGroup(heartCollisionGroup);
+        heart.body.collides(targetCollisionGroup, hitTarget, this);
+
 
         
         //game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -65,26 +99,46 @@ window.onload = function() {
 
     }
     
+    function hitTarget(body1, body2)
+    {
+    	if(target.alive)
+    	{
+    		target.kill();
+    		heart.kill(); 
+    		var newHeart = game.add.sprite(235, 520, 'heart');
+    		var text = game.add.text(game.world.centerX, (game.world.centerY - 100), "Heart Transplant Successful! Congratulations ^  ^", { font: "15px Arial", fill: "#ffffff", align: "center"}); 
+    		text.anchor.setTo(0.5, 0.5); 
+    		
+    	}
+	}
+    
     function update() 
     {
 
-    	
-    	heart.body.setZeroVelocity();
-    	heart.body.velocity.y = 40; 
-
-    	if(cursors.left.isDown)
+    	if(target.alive)
     	{
-    		heart.body.moveLeft(400); 
-    		heart.body.velocity.y = 40; 
+    		heart.body.setZeroVelocity();
+    		heart.body.velocity.y = 80; 
 
-    	}
+    		if(cursors.left.isDown)
+    		{
+				heart.body.moveLeft(300); 
+				heart.body.velocity.y = 80; 
+	
+			}
+			
+			else if (cursors.right.isDown)
+			{
+				heart.body.moveRight(300);
+				heart.body.velocity.y = 80; 
+	
+			}
+		}
+		else
+		{
+			heart.setZeroVelocity();
+		}
     	
-    	else if (cursors.right.isDown)
-    	{
-    		heart.body.moveRight(400);
-    		heart.body.velocity.y = 40; 
-
-    	}
     	
     	
     	
