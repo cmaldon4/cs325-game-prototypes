@@ -39,17 +39,13 @@ window.onload = function() {
     var bgAudio; 
     var captureAudio; 
     var targetAudio; 
+    var gameActive; 
     
-    function create() {
+    function create() 
+    {
     	bgAudio = game.add.audio('bgAudio');
     	bgAudio.play();
-    	//game.physics.startSystem(Phaser.Physics.ARCADE);
-    	
-    	/*hand = game.add.group(); 
-    	
-    	hand.enableBody = true; 
-    	hand.physicsBodyType = Phaser.Physics.ARCADE; 
-    	hand.setAll('checkWorldBounds', true); */
+    
     	
         game.add.image(0, 0, 'background'); 
 
@@ -77,11 +73,11 @@ window.onload = function() {
         targets.enableBody = true; 
         targets.physicsBodyType = Phaser.Physics.P2JS;
         target = targets.create(290, 583, 'target'); 
-        //target = game.add.sprite(290, 583, 'target');
+
         game.physics.p2.enable(target);
-        //target = game.add.sprite(290, 583, 'target'); 
-        //game.physics.p2.enable(target, false);
+
         target.body.setCircle(20);
+        target.alpha = 0;
 
         target.body.fixedRotation = true; 
         target.body.setCollisionGroup(targetCollisionGroup);
@@ -99,14 +95,11 @@ window.onload = function() {
 
 
         
-        //game.physics.startSystem(Phaser.Physics.ARCADE);
-        //game.physics.arcade.gravity.y = 50; 
-        //game.physics.arcade.enable(heart);
-
-        //heart.velocity.y = 200; 
-        //heart.body.velocity.setTo(200, 200);
         
-        hand = game.add.sprite(290, (game.world.randomY + heart.body.y), 'hand');
+        var randomX = game.rnd.integerInRange(100, 200); 
+        var randomY = game.rnd.integerInRange(100, 200); 
+
+        hand = game.add.sprite((heart.body.x + randomX) , (heart.body.y + randomY), 'hand');
         game.physics.p2.enable(hand); 
         hand.body.clearShapes();
         hand.body.loadPolygon('physicsData', 'heart');
@@ -118,14 +111,46 @@ window.onload = function() {
         //hand.alpha = 0; 
         
 
-        
+        //game.rnd.integerInRange((heart.body.x - 30), (heart.body.x + 30))
         cursors = game.input.keyboard.createCursorKeys();
+        
+        gameActive = setInterval(moveHand, 1000);
+        
+        	
         
 
         
 
     }
     
+    function moveHand()
+    {
+    	if(heart.y >= 630)
+		{
+			stopHeart();
+		}
+		else
+		{    	
+			var newRandomX = game.rnd.integerInRange(-100, 200); 
+			while(newRandomX < 100 && newRandomX > -50)
+				{
+					newRandomX = game.rnd.integerInRange(-200, 200); 
+				}
+			var newRandomY = game.rnd.integerInRange(100, 200); 
+
+			if((heart.body.y + newRandomY) <= 675 && (heart.body.x + newRandomX) <= 450 && (heart.body.x + newRandomX) >= 50)
+			{
+				hand.body.x = heart.body.x + newRandomX; 
+				hand.body.y = heart.body.y + newRandomY;
+				console.log(hand.y)
+			}
+
+
+		}
+
+
+
+    }
     function hitTarget(body1, body2)
     {
 
@@ -133,10 +158,12 @@ window.onload = function() {
     	{
     		targetAudio.play();
     		target.kill();
+    		hand.kill();
     		heart.kill(); 
     		var newHeart = game.add.sprite(235, 520, 'heart');
     		var winText = game.add.text(game.world.centerX, (game.world.centerY-100), "Heart transplant successful! Congratulations ^ ^", { font: "15px Synchro LET", fill: "#ffffff", align: "center"}); 
     		winText.anchor.setTo(0.5, 0.5); 
+    		clearInterval(gameActive); 
     		
     	}
 	}
@@ -147,56 +174,30 @@ window.onload = function() {
 		heart.kill(); 
 		hand.kill();
 		var loseText = game.add.text(game.world.centerX, (game.world.centerY-100), "Heart has been stolen, oh nooo ): ", { font: "15px Synchro LET", fill: "#ffffff", align: "center"}); 
-    		loseText.anchor.setTo(0.5, 0.5); 
+		loseText.anchor.setTo(0.5, 0.5); 
+		clearInterval(gameActive);
 	}
     
     function update() 
     {
-
     	if(target.alive)
     	{
     		heart.body.setZeroVelocity();
-    		heart.body.velocity.y = 80; 
+    		heart.body.velocity.y = 60; 
 
     		if(cursors.left.isDown)
     		{
 				heart.body.moveLeft(300); 
-				heart.body.velocity.y = 80; 
+				heart.body.velocity.y = 60; 
 	
 			}
 			
 			else if (cursors.right.isDown)
 			{
 				heart.body.moveRight(300);
-				heart.body.velocity.y = 80; 
+				heart.body.velocity.y = 60; 
 	
 			}
-		}
-		else
-		{
-			//heart.setZeroVelocity();
-		}
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+		}	
     }
 };
