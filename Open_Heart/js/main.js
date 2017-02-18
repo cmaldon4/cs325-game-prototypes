@@ -55,7 +55,7 @@ window.onload = function() {
 
         
         
-        //Physics initation
+        //Physics initation (ALL PHYSICS/COLLISION BELOW INSPIRED FROM COLLISION GROUPS EXAMPLE) 
         game.physics.startSystem(Phaser.Physics.P2JS);
         game.physics.p2.setImpactEvents(true);
         game.physics.p2.defaultRestitution = 0.8; 
@@ -67,7 +67,7 @@ window.onload = function() {
         
         
         
-        //set target 
+        //set invisible target for collision
         
         var targets = game.add.group();
         targets.enableBody = true; 
@@ -84,6 +84,7 @@ window.onload = function() {
         target.body.collides(heartCollisionGroup, hitTarget, this);
         
         
+        // set heart and its collision
         heart = game.add.sprite(0, 0, 'heart');
         game.physics.p2.enable(heart);
         heart.body.clearShapes();
@@ -98,6 +99,8 @@ window.onload = function() {
         
         var randomX = game.rnd.integerInRange(100, 200); 
         var randomY = game.rnd.integerInRange(100, 200); 
+        
+        //create hand on interval to show up randomly and allow collision with heart
 
         hand = game.add.sprite((heart.body.x + randomX) , (heart.body.y + randomY), 'hand');
         game.physics.p2.enable(hand); 
@@ -108,10 +111,9 @@ window.onload = function() {
         hand.body.setCollisionGroup(handCollisionGroup); 
         hand.body.collides(heartCollisionGroup, stopHeart, this); 
         
-        //hand.alpha = 0; 
         
 
-        //game.rnd.integerInRange((heart.body.x - 30), (heart.body.x + 30))
+        //Keyboard movement borrowed from Basic Movement example in Phasor
         cursors = game.input.keyboard.createCursorKeys();
         
         gameActive = setInterval(moveHand, 1000);
@@ -123,8 +125,10 @@ window.onload = function() {
 
     }
     
+    //change hands location based on heart and don't allow to go out of window
     function moveHand()
     {
+    	//end game if heart gets to bottom of window
     	if(heart.y >= 630)
 		{
 			stopHeart();
@@ -151,6 +155,9 @@ window.onload = function() {
 
 
     }
+    
+    
+    //end game if target hit, display message
     function hitTarget(body1, body2)
     {
 
@@ -168,6 +175,7 @@ window.onload = function() {
     	}
 	}
 	
+	//end game if hand hit, display message
 	function stopHeart(body1, body2)
 	{
 		captureAudio.play();
@@ -178,6 +186,8 @@ window.onload = function() {
 		clearInterval(gameActive);
 	}
     
+	
+	//Keyboard movement borrowed from Basic Movement example in Phasor
     function update() 
     {
     	if(target.alive)
