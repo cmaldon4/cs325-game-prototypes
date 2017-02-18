@@ -19,7 +19,9 @@ window.onload = function() {
         // Load an image and call it 'logo'.
         game.load.image( 'background', 'assets/background.png' );
         game.load.image( 'heart', 'assets/heart.png');
+        game.load.physics('physicsData', 'assets/heart-vector.json');
         game.load.image( 'hand', 'assets/NurseHand.png');
+        game.load.physics('physicsData', 'assets/hand-vector.json');
         game.load.image( 'target', 'assets/circle.png');
        
     }
@@ -65,19 +67,21 @@ window.onload = function() {
         game.physics.p2.enable(target);
         //target = game.add.sprite(290, 583, 'target'); 
         //game.physics.p2.enable(target, false);
-        target.body.setCircle(40);
+        target.body.setCircle(20);
 
         target.body.fixedRotation = true; 
         target.body.setCollisionGroup(targetCollisionGroup);
-        target.body.collides(heartCollisionGroup);
+        target.body.collides(heartCollisionGroup, hitTarget, this);
         
         
         heart = game.add.sprite(0, 0, 'heart');
         game.physics.p2.enable(heart);
+        heart.body.clearShapes();
+        heart.body.loadPolygon('physicsData', 'heart'); 
         heart.body.setZeroDamping(); 
         heart.body.fixedRotation = true; 
         heart.body.setCollisionGroup(heartCollisionGroup);
-        heart.body.collides(targetCollisionGroup, hitTarget, this);
+        heart.body.collides([handCollisionGroup, targetCollisionGroup]);
 
 
         
@@ -87,7 +91,16 @@ window.onload = function() {
 
         //heart.velocity.y = 200; 
         //heart.body.velocity.setTo(200, 200);
-        //hand = game.add.sprite(200, 200, 'hand');
+        
+        hand = game.add.sprite(300, 300, 'hand');
+        game.physics.p2.enable(hand); 
+        hand.body.clearShapes();
+        hand.body.loadPolygon('physicsData', 'heart');
+        hand.body.setZeroDamping(); 
+        hand.body.fixedRotation = true; 
+        hand.body.setCollisionGroup(handCollisionGroup); 
+        hand.body.collides(heartCollisionGroup, stopHeart, this); 
+        
         //hand.alpha = 0; 
         
 
@@ -101,15 +114,24 @@ window.onload = function() {
     
     function hitTarget(body1, body2)
     {
+
     	if(target.alive)
     	{
     		target.kill();
     		heart.kill(); 
     		var newHeart = game.add.sprite(235, 520, 'heart');
-    		var text = game.add.text(game.world.centerX, (game.world.centerY - 100), "Heart Transplant Successful! Congratulations ^  ^", { font: "15px Arial", fill: "#ffffff", align: "center"}); 
-    		text.anchor.setTo(0.5, 0.5); 
+    		var winText = game.add.text(game.world.centerX, (game.world.centerY-100), "Heart transplant successful! Congratulations ^ ^", { font: "15px Synchro LET", fill: "#ffffff", align: "center"}); 
+    		winText.anchor.setTo(0.5, 0.5); 
     		
     	}
+	}
+	
+	function stopHeart(body1, body2)
+	{
+		heart.kill(); 
+		hand.kill();
+		var loseText = game.add.text(game.world.centerX, (game.world.centerY-100), "Heart has been stolen, oh nooo ): ", { font: "15px Synchro LET", fill: "#ffffff", align: "center"}); 
+    		loseText.anchor.setTo(0.5, 0.5); 
 	}
     
     function update() 
@@ -136,7 +158,7 @@ window.onload = function() {
 		}
 		else
 		{
-			heart.setZeroVelocity();
+			//heart.setZeroVelocity();
 		}
     	
     	

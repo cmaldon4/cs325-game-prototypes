@@ -1,0 +1,31 @@
+{ 
+    
+    "hand": [
+        
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   63, 244  ,  55, 347  ,  -3.125, 203.75  ,  28, 129  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   117.1875, 399.0625  ,  220, 344  ,  244, 610  ,  128, 612  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   55, 347  ,  63, 244  ,  96.875, 185  ,  153.125, 108.4375  ,  221, 191  ,  220, 344  ,  117.1875, 399.0625  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   61, 17  ,  153.125, 108.4375  ,  87.5, 94.375  ,  50, 50.625  ]
+        } ,
+        {
+            "density": 2, "friction": 0, "bounce": 0, 
+            "filter": { "categoryBits": 1, "maskBits": 65535 },
+            "shape": [   153.125, 108.4375  ,  96.875, 185  ,  87.5, 94.375  ]
+        }
+    ]
+}
