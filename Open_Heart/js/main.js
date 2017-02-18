@@ -17,12 +17,17 @@ window.onload = function() {
     
     function preload() {
         // Load an image and call it 'logo'.
+        game.load.audio('bgAudio', ['assets/background.mp3', 'assets/background.ogg']);
         game.load.image( 'background', 'assets/background.png' );
         game.load.image( 'heart', 'assets/heart.png');
         game.load.physics('physicsData', 'assets/heart-vector.json');
         game.load.image( 'hand', 'assets/NurseHand.png');
         game.load.physics('physicsData', 'assets/hand-vector.json');
         game.load.image( 'target', 'assets/circle.png');
+        game.load.audio('captureAudio', ['assets/Squishy2.mp3', 'assets/Squishy2.ogg']);
+        game.load.audio('targetAudio', ['assets/Squishy1.mp3', 'assets/Squishy1.ogg']);
+
+
        
     }
     
@@ -31,8 +36,13 @@ window.onload = function() {
     var hand; 
     var cursors; 
     var target; 
+    var bgAudio; 
+    var captureAudio; 
+    var targetAudio; 
     
     function create() {
+    	bgAudio = game.add.audio('bgAudio');
+    	bgAudio.play();
     	//game.physics.startSystem(Phaser.Physics.ARCADE);
     	
     	/*hand = game.add.group(); 
@@ -42,7 +52,11 @@ window.onload = function() {
     	hand.setAll('checkWorldBounds', true); */
     	
         game.add.image(0, 0, 'background'); 
-       
+
+        
+        captureAudio = game.add.audio('captureAudio');
+        targetAudio = game.add.audio('targetAudio'); 
+
         
         
         //Physics initation
@@ -92,7 +106,7 @@ window.onload = function() {
         //heart.velocity.y = 200; 
         //heart.body.velocity.setTo(200, 200);
         
-        hand = game.add.sprite(300, 300, 'hand');
+        hand = game.add.sprite(290, (game.world.randomY + heart.body.y), 'hand');
         game.physics.p2.enable(hand); 
         hand.body.clearShapes();
         hand.body.loadPolygon('physicsData', 'heart');
@@ -117,6 +131,7 @@ window.onload = function() {
 
     	if(target.alive)
     	{
+    		targetAudio.play();
     		target.kill();
     		heart.kill(); 
     		var newHeart = game.add.sprite(235, 520, 'heart');
@@ -128,6 +143,7 @@ window.onload = function() {
 	
 	function stopHeart(body1, body2)
 	{
+		captureAudio.play();
 		heart.kill(); 
 		hand.kill();
 		var loseText = game.add.text(game.world.centerX, (game.world.centerY-100), "Heart has been stolen, oh nooo ): ", { font: "15px Synchro LET", fill: "#ffffff", align: "center"}); 
