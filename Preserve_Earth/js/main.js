@@ -20,15 +20,23 @@ window.onload = function()
     {
         // Load an image and call it 'logo'.
         game.load.image( 'background', 'assets/background.png' );
-        game.load.spritesheet('char', 'assets/spritechar.png', 32, 32); 
+        game.load.spritesheet( 'char', 'assets/tempnewchar.png', 166, 159); 
+        game.load.image( 'heart', 'assets/heart.png'); 
+        game.load.image('alert', 'assets/alert.png');
     }
     
     var background, character;
     
     function create() 
     {
+    	//in right direction, x = 665 is limit, in left x = 705
         background = game.add.sprite( 0, 0, 'background' );
-        character = game.add.sprite(50, 50, 'char'); 
+        character = game.add.sprite(705, 227, 'char'); 
+        character.frame = 4;
+        character.animations.add('left', [4, 0, 3, 5, 1, 2], 5, true); 
+        character.animations.add('right', [7, 11, 8, 6, 10, 9], 5, true); 
+
+        character.play('left'); 
     }
     
     function update() 
