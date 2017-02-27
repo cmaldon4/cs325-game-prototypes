@@ -20,14 +20,15 @@ window.onload = function()
     {
         // Load an image and call it 'logo'.
         game.load.image( 'background', 'assets/background.png' );
+        game.load.spritesheet('char', 'assets/spritechar.png', 32, 32); 
     }
     
-    var background;
+    var background, character;
     
     function create() 
     {
         background = game.add.sprite( 0, 0, 'background' );
-
+        character = game.add.sprite(50, 50, 'char'); 
     }
     
     function update() 
