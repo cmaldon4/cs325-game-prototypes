@@ -104,6 +104,8 @@ window.onload = function()
 			game.load.audio('waterAudio', ['assets/WaterAudio.mp3', 'assets/WaterAudio.ogg']); 
 		},
 		
+		
+		//Physics from collision group phaser example. 
 		create: function () 
 		{
 	
@@ -135,6 +137,8 @@ window.onload = function()
 			//character.body.setSize(character.body.width() *.80, character.height()); 
 			//character.body.setOriginCenter(); 
 			
+			
+			//Animation logic from Josh Morony HTML5 tutorials
 			
 			character.animations.add('left', [4, 0, 3, 5, 1, 2], 4, true); 
 			character.animations.add('right', [7, 11, 8, 6, 10, 9], 4, true);
@@ -206,6 +210,7 @@ window.onload = function()
 				character.animations.stop();
 			}
 			
+			//inspired from overlapping image without physics phaser example
 			if(stop == false && cursors.down.isDown && targetHit(character, alert) && alert.alpha == 1)
 			{
 				heart.alpha = 0; 
@@ -251,6 +256,7 @@ window.onload = function()
 	
 		},
 		
+		//Timer functionality from Lewis Lane 
 		render: function()
 		{
 			
