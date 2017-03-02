@@ -20,7 +20,7 @@ window.onload = function()
     {
         // Load an image and call it 'logo'.
         game.load.image( 'background', 'assets/background.png' );
-        game.load.spritesheet( 'char', 'assets/tempnewchar.png', 138, 159); 
+        game.load.spritesheet( 'char', 'assets/tempnewchar.png', 140, 158); 
         game.load.image( 'heart', 'assets/heart.png'); 
         game.load.image('alert', 'assets/alert.png');
         game.load.image('landscape', 'assets/landscape.png'); 
@@ -63,8 +63,16 @@ window.onload = function()
         character.body.collides(alertCollisionGroup, targetHit, this); 
         character.frame = 11; 
         
-        alert = game.add.sprite(800, 353, 'alert');
+        var alerts = game.add.group(); 
+        alerts.enableBody = true; 
+        alerts.physicsBodyType = Phaser.Physics.P2JS; 
+        var randomX = game.rnd.integerInRange(40, 930); 
+        alert = alerts.create(randomX, 353, 'alert'); 
+        
+        
+        //alert = game.add.sprite(800, 353, 'alert');
         heart = game.add.sprite(700, 322, 'heart');
+        heart.alpha = 0; 
 
 
         landscape = game.add.sprite(35, 268, 'landscape'); 
@@ -73,7 +81,7 @@ window.onload = function()
         flowers = game.add.sprite(785, 338, 'flowers'); 
         
         
-        //heart replaces alert, but must be adjusted +31 in the y axis
+        //heart replaces alert, but must be adjusted -31 in the y axis
         //pop up limitation is 930 x axis
         
         
@@ -122,7 +130,14 @@ window.onload = function()
     	
     	if(cursors.down.isDown && targetHit(character, alert))
     	{
-    		alert.kill(); 
+    		heart.x = alert.x; 
+    		heart.y = alert.y - 33; 
+    		while(alert.alpha > 0 && heart.alpha < 1)
+    		{
+    			alert.alpha -= 1; 
+    			heart.alpha += 1; 
+    		}
+    		//heart.alpha = 1; 
     	}
     }
 };
