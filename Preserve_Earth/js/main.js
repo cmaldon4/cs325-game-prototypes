@@ -208,6 +208,7 @@ window.onload = function()
 			
 			if(stop == false && cursors.down.isDown && targetHit(character, alert) && alert.alpha == 1)
 			{
+				heart.alpha = 0; 
 				heart.x = alert.x; 
 				heart.y = alert.y - 33; 
 				heart.alpha = 1; 
