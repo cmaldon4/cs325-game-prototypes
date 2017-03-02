@@ -92,10 +92,10 @@ window.onload = function()
     	preload: function () 
 		{
 			// Load an image and call it 'logo'.
-			game.load.image( 'background', 'assets/background.png' );
-			game.load.spritesheet( 'char', 'assets/tempnewchar.png', 140, 158); 
-			game.load.image( 'heart', 'assets/heart.png'); 
-			game.load.image('alert', 'assets/alert.png');
+			game.load.image('background', 'assets/Background.png' );
+			game.load.spritesheet('char', 'assets/tempnewchar.png', 140, 158); 
+			game.load.image('heart', 'assets/Heart.png'); 
+			game.load.image('alert', 'assets/Alert.png');
 			game.load.image('landscape', 'assets/landscape.png'); 
 			game.load.image('blueflower', 'assets/blueflower.png'); 
 			game.load.image('littleflower', 'assets/littleflower.png'); 
@@ -225,6 +225,8 @@ window.onload = function()
 				alertPresent = false; 
 				
 			}
+			
+			//Phaser example tweens fading in a sprite
 			if(game.time.now >= timer && timer != -5)
 			{
 				var loseText = game.add.text(game.world.centerX, (game.world.centerY-100), "The plants are dying... We've lost.", { font: "30px Lucida Handwriting", fill: "#ffffff", align: "center"}); 
@@ -247,6 +249,7 @@ window.onload = function()
 			{
 				createAlert();
 			}
+			//Phaser Example Tweens Fading in a Sprite
 			if(game.time.now >= timeCheck + 2000 && heart.alpha == 1 && heartFade == true)
 			{
 				game.add.tween(heart).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 1000, 0, false);
