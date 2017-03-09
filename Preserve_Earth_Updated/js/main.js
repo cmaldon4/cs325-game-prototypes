@@ -473,7 +473,7 @@ window.onload = function()
 					pocky.kill();
 					pepsi.kill();
 					bag.kill();
-					game.add.tween(background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 2000, true);
+					game.add.tween(background).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
 					clearInterval(gameActive); 
 					
