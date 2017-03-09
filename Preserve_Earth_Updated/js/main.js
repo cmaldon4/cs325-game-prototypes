@@ -586,11 +586,11 @@ window.onload = function()
 			
 			if (cTimer.running)
 			{
-				game.debug.text("Score: " + this.formatTime(Math.round((cTimer.ms) / 1000)), 20, 58, "#fff", '20px Parisienne'); 
+				game.debug.text("Score: " + this.formatTime(Math.round((cTimer.ms) / 1000)), 35, 58, "#fff", '20px Parisienne'); 
 			}
 			else
 			{
-				game.debug.text("Score: " + this.formatTime(last), 20, 58, "#fff", '20px Parisienne'); 
+				game.debug.text("Score: " + this.formatTime(last), 35, 58, "#fff", '20px Parisienne'); 
 			}
 
 		},
