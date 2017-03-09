@@ -444,7 +444,7 @@ window.onload = function()
 			}
 			
 			//Phaser example tweens fading in a sprite
-			if(countLives == 3)
+			if(countLives >= 3)
 				{
 					var loseText = game.add.text(game.world.centerX, (game.world.centerY - 100), "The plants are dying... We've lost.", { font: "50px Parisienne", fill: "#ffffff", align: "center"}); 
 					loseText.anchor.setTo(0.5, 0.5); 
