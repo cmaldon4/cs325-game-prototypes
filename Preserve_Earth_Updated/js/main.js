@@ -41,6 +41,7 @@ window.onload = function()
     var BasicGame = function (game) {}; 
     BasicGame.Boot = function (game) {};
     
+    
     function clickEvent(sprite)
     {
     		
@@ -445,7 +446,7 @@ window.onload = function()
 			//Phaser example tweens fading in a sprite
 			if(countLives == 3)
 				{
-					var loseText = game.add.text(game.world.centerX, (game.world.centerY-100), "The plants are dying... We've lost.", { font: "30px Lucida Handwriting", fill: "#ffffff", align: "center"}); 
+					var loseText = game.add.text(game.world.centerX, (game.world.centerY - 100), "The plants are dying... We've lost.", { font: "50px Parisienne", fill: "#ffffff", align: "center"}); 
 					loseText.anchor.setTo(0.5, 0.5); 
 					cTimer.stop();
 					stop = true; 
@@ -585,11 +586,11 @@ window.onload = function()
 			
 			if (cTimer.running)
 			{
-				game.debug.text("Score: " + this.formatTime(Math.round((cTimer.ms) / 1000)), 2, 14, "#fff"); 
+				game.debug.text("Score: " + this.formatTime(Math.round((cTimer.ms) / 1000)), 20, 58, "#fff", '20px Parisienne'); 
 			}
 			else
 			{
-				game.debug.text("Score: " + this.formatTime(last), 2, 14, "#fff"); 
+				game.debug.text("Score: " + this.formatTime(last), 20, 58, "#fff", '20px Parisienne'); 
 			}
 
 		},
