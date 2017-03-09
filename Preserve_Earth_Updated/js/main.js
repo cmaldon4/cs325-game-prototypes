@@ -35,7 +35,7 @@ window.onload = function()
     var cTimer; 
     var fTimer; 
     var heartFade; 
-    var cups, food, food2, ramen, pocky, pepsi, bag, lives, countLives, trash, last; 
+    var cups, food, food2, ramen, pocky, pepsi, bag, lives, countLives, trash, last, overlay; 
     var cupsAudio, foodAudio, ramenAudio, pockyAudio, pepsiAudio, bagAudio, loseLife;
     
     var BasicGame = function (game) {}; 
@@ -177,6 +177,7 @@ window.onload = function()
 			game.load.image('pocky', 'assets/pocky.png');
 			game.load.image('bag', 'assets/bag.png'); 
 			game.load.image('life', 'assets/life.png'); 
+			game.load.image('overlay', 'assets/bgcopy.png');
 			
 			game.load.audio('cupsAudio', ['assets/cupsAudio.mp3', 'assets/cupsAudio.ogg']); 
 			game.load.audio('foodAudio', ['assets/foodAudio.mp3', 'assets/foodAudio.ogg']); 
@@ -245,6 +246,9 @@ window.onload = function()
 			character.body.setCollisionGroup(charCollisionGroup); 
 			character.body.collides(alertCollisionGroup, targetHit, this); 
 			character.frame = 11; 
+			
+			overlay = game.add.sprite(0, 0, 'overlay'); 
+			
 			
 			alerts = game.add.group(); 
 			alerts.enableBody = true; 
@@ -358,6 +362,8 @@ window.onload = function()
 			bag.body.setZeroDamping();
 			bag.body.fixedRotation =true; 
 
+			
+			//Pixel Perfect Detection example from Phaser
 			cups.inputEnabled = true; 
 			cups.input.pixelPerfectOver = true; 
 			cups.events.onInputDown.add(function(cups){clickEvent(cups);}, this); 
@@ -394,9 +400,10 @@ window.onload = function()
 			
 			
 			landscape = game.add.sprite(35, 268, 'landscape'); 
-			blueflower = game.add.sprite(150, 325, 'blueflower');
+			blueflower = game.add.sprite(150, 327, 'blueflower');
 			littleflower = game.add.sprite(535, 375, 'littleflower'); 
 			flowers = game.add.sprite(785, 338, 'flowers'); 
+
 		
 		},
 		
@@ -458,6 +465,7 @@ window.onload = function()
 					blueflower.kill();
 					landscape.kill();
 					littleflower.kill();
+					overlay.kill();
 					cups.kill();
 					food.kill();
 					food2.kill();
@@ -465,7 +473,7 @@ window.onload = function()
 					pocky.kill();
 					pepsi.kill();
 					bag.kill();
-					game.add.tween(background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+					game.add.tween(background).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 2000, true);
 
 					clearInterval(gameActive); 
 					
