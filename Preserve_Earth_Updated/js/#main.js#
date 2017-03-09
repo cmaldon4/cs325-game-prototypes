@@ -358,6 +358,8 @@ window.onload = function()
 			bag.body.setZeroDamping();
 			bag.body.fixedRotation =true; 
 
+			
+			//Pixel Perfect Detection example from Phaser
 			cups.inputEnabled = true; 
 			cups.input.pixelPerfectOver = true; 
 			cups.events.onInputDown.add(function(cups){clickEvent(cups);}, this); 
