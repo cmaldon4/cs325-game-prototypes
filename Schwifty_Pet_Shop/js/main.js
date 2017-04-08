@@ -33,7 +33,8 @@ window.onload = function() {
     var brTimer = 8;
     var cageTimerArray;
     var booleanArray, cageIndex;
-    
+    var cageHandling = game.rnd.integerInRange(0, 1000); 
+    var start = true; 
     var correct = false;
 
     function createChar()
@@ -50,7 +51,12 @@ window.onload = function() {
     	animalRandom.alpha = 0; 
 		animalRandom = Phaser.ArrayUtils.getRandomItem(animalArray); 
 		animalRandom.alpha = 1; 
-	    openCage();
+		if(start == true)
+		{
+			openCage();
+			cageHandling += game.time.now; 
+			start = false; 
+		}
 		animalTimer = game.time.now + 3000; 
 		//console.log(animalArray.indexOf(animalRandom)); 
 		
@@ -107,7 +113,6 @@ window.onload = function() {
 				correct = false; 
 			}
 		}
-		console.log(correct); 
 	}
     var BasicGame = function (game) {};
     BasicGame.Boot = function (game) {};
@@ -314,6 +319,16 @@ window.onload = function() {
 			gameTimer = game.time.create(); 
 			gameTimer.start(); 
 			game.physics.startSystem(Phaser.Physics.ARCADE);     
+		
+		
+			this.game.input.keyboard.onDownCallBack = function(e)
+			{
+				if(game.input.keyboard == Phaser.Keyboard.W)
+				{
+					console.log("hey"); 
+				}
+			}
+		
 		},
 		
 		update: function () 
@@ -430,7 +445,32 @@ window.onload = function() {
 				}					
 				
 			}
+			if(start == false)
+			{
+				if(game.time.now >= cageHandling)
+				{
+					openCage(); 
+				}
+				cageHandling = game.rnd.integerInRange(0, 1000) + game.time.now; 
+			}
 			//openCage(); 
+			if(game.time.now >= charTimer - 2000)
+			{
+				var count = 0; 
+				for(var i = 0; i < booleanArray.length; i++)
+				{
+					if(booleanArray[i] == false) 
+					{
+						count++; 
+					}
+				}
+				
+				var rand = game.rnd.integerInRange(0, count-3); 
+				for(var x = 0; x < rand; x++)
+				{
+					openCage(); 
+				}
+			}
 	
 		}
     	
