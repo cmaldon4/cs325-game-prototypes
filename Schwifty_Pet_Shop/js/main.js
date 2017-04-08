@@ -20,7 +20,7 @@ window.onload = function() {
     var chibiArray, chibi1, chibi2, chibi3, chibi4, chibi5, chibi6, chibi7, chibi8, chibi9, chibi10; 
     var animalArray, bubble, cat, dog, pig, hamster, turtle, fox, redpanda, panda, bunny; 
     var gameTimer, charTimer, animalTimer;
-    var lives, money; 
+    var lives = 3; 
     var chibiRandom, cageRandom, animalRandom;
     var tlTimer = 0;
     var tmTimer = 1;
@@ -32,19 +32,30 @@ window.onload = function() {
     var bmTimer = 7; 
     var brTimer = 8;
     var cageTimerArray;
-    var booleanArray, cageIndex;
-    var cageHandling = game.rnd.integerInRange(0, 1000); 
+    var booleanArray;
+    var cageHandling = game.rnd.integerInRange(200, 1000); 
     var start = true; 
-    var correct = false;
+    var notRandom = false; 
+    var checking = false; 
+    var correct = true;
+    var prevent = false; 
+    var gameActive = true; 
+	var topleft, topmiddle, topright, middlemiddle, middleright, middleleft, bottomleft, bottommiddle, bottomright; 
+	var top7left, top8middle, top9right, middle5middle, middle6right, middle4left, bottom1left, bottom2middle, bottom3right; 
 
+	var message1 = false; 
+	var message2 = false; 
+	var message3 = false; 
     function createChar()
     {
     	chibiRandom.alpha = 0; 
     	animalRandom.alpha = 0; 
 		chibiRandom = Phaser.ArrayUtils.getRandomItem(chibiArray); 
 		chibiRandom.alpha = 1; 
-		animalTimer = game.time.now + 2000; 
-		charTimer = game.time.now + 5000;
+		bubble.alpha = 1; 
+		animalTimer = game.time.now + 4000; 
+		charTimer = game.time.now + 10000;
+		prevent = false; 
 	}
 	function createAnimal()
 	{
@@ -53,11 +64,12 @@ window.onload = function() {
 		animalRandom.alpha = 1; 
 		if(start == true)
 		{
+			notRandom = false; 
 			openCage();
 			cageHandling += game.time.now; 
 			start = false; 
 		}
-		animalTimer = game.time.now + 3000; 
+		animalTimer = game.time.now + 6000; 
 		//console.log(animalArray.indexOf(animalRandom)); 
 		
 	}
@@ -65,54 +77,101 @@ window.onload = function() {
 	{
 		//true is open false is closed
 		//set the state, timer, and visual of corresp. cage
-		cageIndex = Math.floor((Math.random() * 9));
-		if(booleanArray[cageIndex] == false)
+		var cageIndex; 
+		if(notRandom == true) 
+		{
+			cageIndex = animalArray.indexOf(animalRandom); 
+			prevent = true; 
+		}
+		else
+		{
+			cageIndex = Math.floor((Math.random() * 9));
+		}
+		if(booleanArray[cageIndex] == false && cageArray[cageIndex].alpha == 1)
 		{
 			cageArray[cageIndex].alpha = 0; 	
-			cageTimerArray[cageIndex] = game.time.now + 1200;				
+			cageTimerArray[cageIndex] = game.time.now + 3000;				
 			booleanArray[cageIndex] = true; 	
 		}
+		
 		
 		//the door is open, the game knows the door is open, there is a 1.5s timer
 	}
 	function closeCage(location)
 	{
-		location.alpha = 1; 
-		var tempCageIndex = cageArray.indexOf(location); 
-		cageTimerArray[tempCageIndex] = -5; 
-		booleanArray[tempCageIndex] = false; 
+		if(checking == true)
+		{
+			checkGameState(location); 
+			location.alpha = 1; 
+			var tempCageIndex = cageArray.indexOf(location); 
+			cageTimerArray[tempCageIndex] = -5; 
+			booleanArray[tempCageIndex] = false;	
+			checking = false; 
+		}
+		else
+		{
+			location.alpha = 1; 
+			var tempCageIndex = cageArray.indexOf(location); 
+			cageTimerArray[tempCageIndex] = -5; 
+			booleanArray[tempCageIndex] = false;
+			checkGameState(location); 			
+		}
+
 	}
     
 	function checkGameState(location)
 	{
-		correct = false; 
+
 		var tCageIndex = cageArray.indexOf(location); 
-		if(animalRandom.alpha == 1)
+		console.log(tCageIndex); 
+				console.log("boolean" + booleanArray[tCageIndex]); 
+
+		if(animalRandom.alpha == 1 && gameActive == true)
 		{
 			if(tCageIndex == animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == true)
 			{
 				correct = true; 
+				//console.log("correct1" + correct); 			
+				
+ 
 			}
+			else if(tCageIndex == animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == false)
+			{
+				correct = false; 
+				//console.log("correct1" + correct); 			
+				message1 = true; 
+ 
+			}			
 			else if(tCageIndex != animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == false)
 			{ 
 				correct = true; 
-			}
-			else
+		//console.log("correct2" + correct); 			
+				
+			}                                             
+			else if(tCageIndex != animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == true)
 			{
 				correct = false; 
+				message2 = true; 
+						
 			}
 		}
-		else
+		else if(animalRandom.alpha == 0 && gameActive == true)
 		{
 			if(booleanArray[tCageIndex] == false)
 			{
 				correct = true;
 			}
-			else
+			else if(booleanArray[tCageIndex] == true) 
 			{
 				correct = false; 
+				message3 = true;
+				
 			}
+		//console.log("correct3" + correct); 			
 		}
+		console.log(correct); 
+		console.log("boolean" + booleanArray[tCageIndex]); 
+		
 	}
     var BasicGame = function (game) {};
     BasicGame.Boot = function (game) {};
@@ -238,6 +297,9 @@ window.onload = function() {
 			animbunny.animations.play('constant'); 
 			
 			
+			
+
+			
 			//attaching cages to variables
 			cagetopleft = game.add.sprite(117, 100, 'cagetop');
 			cagetopmiddle = game.add.sprite(229, 100, 'cagetop'); 
@@ -285,7 +347,7 @@ window.onload = function() {
 	
 			//display chibi
 			chibiArray = [chibi1, chibi2, chibi3, chibi4, chibi5, chibi6, chibi7, chibi8, chibi9, chibi10];
-			charTimer = 5000;
+			charTimer = 10000;
 		    chibiRandom = Phaser.ArrayUtils.getRandomItem(chibiArray); 
 		    chibiRandom.alpha = 1; 
 					
@@ -313,7 +375,7 @@ window.onload = function() {
 			
 			animalArray = [hamster, pig, cat, bunny, dog, redpanda, panda, turtle, fox];
 		    animalRandom = Phaser.ArrayUtils.getRandomItem(animalArray); 
-			animalTimer = 2000; 
+			animalTimer = 4000; 
 
 			
 			gameTimer = game.time.create(); 
@@ -321,14 +383,48 @@ window.onload = function() {
 			game.physics.startSystem(Phaser.Physics.ARCADE);     
 		
 		
-			this.game.input.keyboard.onDownCallBack = function(e)
-			{
-				if(game.input.keyboard == Phaser.Keyboard.W)
-				{
-					console.log("hey"); 
-				}
-			}
-		
+			
+			topleft = game.input.keyboard.addKey(Phaser.Keyboard.W); 
+			topmiddle = game.input.keyboard.addKey(Phaser.Keyboard.E); 
+			topright = game.input.keyboard.addKey(Phaser.Keyboard.R); 
+			middleleft = game.input.keyboard.addKey(Phaser.Keyboard.S); 
+			middlemiddle = game.input.keyboard.addKey(Phaser.Keyboard.D); 
+			middleright = game.input.keyboard.addKey(Phaser.Keyboard.F); 
+			bottomleft = game.input.keyboard.addKey(Phaser.Keyboard.X); 
+			bottommiddle = game.input.keyboard.addKey(Phaser.Keyboard.C); 
+			bottomright = game.input.keyboard.addKey(Phaser.Keyboard.V); 
+			
+			top7left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_7);
+			top8middle = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_8); 
+			top9right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_9); 
+			middle4left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_4); 
+			middle5middle = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_5); 
+			middle6right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_6); 
+			bottom1left = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_1); 
+			bottom2middle = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_2); 
+			bottom3right = game.input.keyboard.addKey(Phaser.Keyboard.NUMPAD_3); 
+			
+			topleft.onDown.add(function() {closeCage(cagetopleft); checking = false;});
+			topmiddle.onDown.add(function() {closeCage(cagetopmiddle); checking = false;});
+			topright.onDown.add(function() {closeCage(cagetopright); checking = false;});
+			middleleft.onDown.add(function() {closeCage(cagemiddleleft); checking = false;});
+			middlemiddle.onDown.add(function() {closeCage(cagemiddlemiddle); checking = false;});
+			middleright.onDown.add(function() {closeCage(cagemiddleright); checking = false;});
+			bottomleft.onDown.add(function() {closeCage(cagebottomleft); checking = false;});
+			bottommiddle.onDown.add(function() {closeCage(cagebottommiddle); checking = false;});
+			bottomright.onDown.add(function() {closeCage(cagebottomright); checking = false;});
+
+			top7left.onDown.add(function() {closeCage(cagetopleft); checking = false;});
+			top8middle.onDown.add(function()  {closeCage(cagetopmiddle); checking = false;});
+			top9right.onDown.add(function() {closeCage(cagetopright); checking = false;});
+			middle4left.onDown.add(function() {closeCage(cagemiddleleft); checking = false;});
+			middle5middle.onDown.add(function() {closeCage(cagemiddlemiddle); checking = false;});
+			middle6right.onDown.add(function() {closeCage(cagemiddleright); checking = false;});
+			bottom1left.onDown.add(function() {closeCage(cagebottomleft); checking = false;});
+			bottom2middle.onDown.add(function() {closeCage(cagebottommiddle); checking = false;});
+			bottom3right.onDown.add(function() {closeCage(cagebottomright); checking = false;});
+
+			
 		},
 		
 		update: function () 
@@ -336,117 +432,87 @@ window.onload = function() {
 			var item = Phaser.ArrayUtils.getRandomItem(cageArray); 
 
 			
-			if(game.time.now >= charTimer)
+			if(game.time.now >= charTimer && gameActive == true)
 			{
 				createChar();
 			}
-			if(game.time.now >= animalTimer)
+			if(game.time.now >= animalTimer && gameActive == true)
 			{
 				createAnimal();
 			}
+			
+			//If the cage has been opened for 2.4s
 			if(game.time.now >= cageTimerArray[tlTimer] && cageTimerArray[tlTimer] != -5)
 			{
-				if(game.time.now >= cageTimerArray[tlTimer]+600)
-				{
-					closeCage(cagetopleft);	
-				}
-				else
-				{
-					checkGameState(cagetopleft);
-				}
+				checking = true; 
+				closeCage(cagetopleft);					
 				
 			}
 			if(game.time.now >= cageTimerArray[tmTimer] && cageTimerArray[tmTimer] != -5)
 			{
-				if(game.time.now >= cageTimerArray[tmTimer]+600)
-				{
-					closeCage(cagetopmiddle);				
-				}
-				else
-				{
-					checkGameState(cagetopmiddle);
-				}				
+				checking = true;
+				closeCage(cagetopmiddle);				
+						
 			}
 			if(game.time.now >= cageTimerArray[trTimer] && cageTimerArray[trTimer] != - 5)
 			{
-				if(game.time.now >= cageTimerArray[trTimer]+600)
-				{
-					closeCage(cagetopright);				
-				}
-				else
-				{
-					checkGameState(cagetopright);
-				}				
+				checking = true;
+				closeCage(cagetopright);				
+								
 			}
 			if(game.time.now >= cageTimerArray[mlTimer] && cageTimerArray[mlTimer] != - 5)
 			{
-				if(game.time.now >= cageTimerArray[mlTimer]+600)
-				{
+				checking = true;
 					closeCage(cagemiddleleft);
-				}
-				else
-				{
-					checkGameState(cagemiddleleft);
-				}				
+
+								
 			}
 			if(game.time.now >= cageTimerArray[mmTimer] && cageTimerArray[mmTimer] != - 5)
 			{
-				if(game.time.now >= cageTimerArray[mmTimer]+600)
-				{
+				checking = true; 
 					closeCage(cagemiddlemiddle);				
-				}
-				else
-				{
-					checkGameState(cagemiddlemiddle);
-				}					
+
+									
 			}
 			if(game.time.now >= cageTimerArray[mrTimer] && cageTimerArray[mrTimer] != - 5)
 			{
-				if(game.time.now >= cageTimerArray[mrTimer]+600)
-				{
+					checking = true; 
 					closeCage(cagemiddleright);
-				}
-				else
-				{
-					checkGameState(cagemiddleright);
-				}					
+
+								
 			}
 			if(game.time.now >= cageTimerArray[blTimer] && cageTimerArray[blTimer] != - 5)
 			{
-				if(game.time.now >= cageTimerArray[blTimer]+600)
-				{
+					checking = true; 
 					closeCage(cagebottomleft);				
-				}
-				else
-				{
-					checkGameState(cagebottomleft);
-				}					
+
+									
 			}
 			if(game.time.now >= cageTimerArray[bmTimer] && cageTimerArray[bmTimer] != - 5)
 			{
-				if(game.time.now >= cageTimerArray[bmTimer]+600)
-				{
+					checking = true; 
 					closeCage(cagebottommiddle);		
-				}
-					else
-				{
-					checkGameState(cagebottommiddle);
-				}				
+
+							
 			}
 			if(game.time.now >= cageTimerArray[brTimer] && cageTimerArray[brTimer] != - 5)
 			{
-				if(game.time.now >= cageTimerArray[brTimer]+600)
-				{
+					checking = true; 
 					closeCage(cagebottomright);
-				}
-				else
-				{
-					checkGameState(cagebottomright);
-				}					
+
+									
 				
 			}
-			if(start == false)
+			/*//temp here, remove after testing
+		if(start == true)
+		{
+			openCage();
+			cageHandling += game.time.now; 
+			start = false; 
+		}*/
+			if(start == false && gameActive == true)
 			{
+				notRandom = false; 
 				if(game.time.now >= cageHandling)
 				{
 					openCage(); 
@@ -454,9 +520,9 @@ window.onload = function() {
 				cageHandling = game.rnd.integerInRange(0, 1000) + game.time.now; 
 			}
 			//openCage(); 
-			if(game.time.now >= charTimer - 2000)
+			if(game.time.now >= charTimer - 4000 && prevent == false && gameActive == true)
 			{
-				var count = 0; 
+				/*var count = 0; 
 				for(var i = 0; i < booleanArray.length; i++)
 				{
 					if(booleanArray[i] == false) 
@@ -465,12 +531,74 @@ window.onload = function() {
 					}
 				}
 				
-				var rand = game.rnd.integerInRange(0, count-3); 
+				var rand = game.rnd.integerInRange(0, count-5); 
 				for(var x = 0; x < rand; x++)
 				{
 					openCage(); 
-				}
+				}*/
+				notRandom = true; 
+				openCage(); 
+				notRandom = false; 
+				prevent = true; 
 			}
+			if(message1 == true)
+			{
+				var loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  YOU'VE LOST A CUSTOMER... GAME OVER.", { font: "30px Covered by Your Grace", fill: "#00000", align: "center"}); 
+				loseText.anchor.setTo(0.5, 0.5); 
+				gameActive = false; 
+				animpig.animations.stop();
+				animdog.animations.stop();
+				animturtle.animations.stop();
+				animfox.animations.stop();
+				animham.animations.stop();
+				animredpanda.animations.stop();
+				animpanda.animations.stop();
+				animatedcat.animations.stop();
+				animbunny.animations.stop();
+				chibiRandom.alpha = 0; 
+				animalRandom.alpha = 0; 
+				bubble.alpha = 0; 
+							
+
+			}
+			if(message2 == true)
+			{
+				var loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  AN ANIMAL HAS ESCAPED. . . GAME OVER.", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+				loseText.anchor.setTo(0.5, 0.5); 
+				gameActive = false;
+				animpig.animations.stop();
+				animdog.animations.stop();
+				animturtle.animations.stop();
+				animfox.animations.stop();
+				animham.animations.stop();
+				animredpanda.animations.stop();
+				animpanda.animations.stop();
+				animatedcat.animations.stop();
+				animbunny.animations.stop();
+				chibiRandom.alpha = 0; 
+				animalRandom.alpha = 0; 
+				bubble.alpha = 0; 				
+
+			}	
+			if(message3 == true)
+			{
+				var loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  AN ANIMAL HAS ESCAPED... GAME OVER.", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+				loseText.anchor.setTo(0.5, 0.5); 
+				gameActive = false; 
+				animpig.animations.stop();
+				animdog.animations.stop();
+				animturtle.animations.stop();
+				animfox.animations.stop();
+				animham.animations.stop();
+				animredpanda.animations.stop();
+				animpanda.animations.stop();
+				animatedcat.animations.stop();
+				animbunny.animations.stop();			
+				chibiRandom.alpha = 0; 
+				animalRandom.alpha = 0; 
+				bubble.alpha = 0; 
+			
+			}			
 	
 		}
     	
