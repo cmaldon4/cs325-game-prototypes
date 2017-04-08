@@ -43,6 +43,10 @@ window.onload = function() {
 	var topleft, topmiddle, topright, middlemiddle, middleright, middleleft, bottomleft, bottommiddle, bottomright; 
 	var top7left, top8middle, top9right, middle5middle, middle6right, middle4left, bottom1left, bottom2middle, bottom3right; 
 
+	var bgAudio;
+	var entranceAudio; 
+	var audioActive; 
+	
 	var message1 = false; 
 	var message2 = false; 
 	var message3 = false; 
@@ -51,6 +55,7 @@ window.onload = function() {
     	chibiRandom.alpha = 0; 
     	animalRandom.alpha = 0; 
 		chibiRandom = Phaser.ArrayUtils.getRandomItem(chibiArray); 
+		entranceAudio.play();		
 		chibiRandom.alpha = 1; 
 		bubble.alpha = 1; 
 		animalTimer = game.time.now + 4000; 
@@ -173,6 +178,14 @@ window.onload = function() {
 		console.log("boolean" + booleanArray[tCageIndex]); 
 		
 	}
+	
+	function updateAudio()
+	{
+		if(!bgAudio.isPlaying)
+		{
+			bgAudio.play(); 
+		}
+	}
     var BasicGame = function (game) {};
     BasicGame.Boot = function (game) {};
     BasicGame.Boot.prototype = 
@@ -226,7 +239,8 @@ window.onload = function() {
 			game.load.image('bunny', 'assets/bunny.png');
 	   
 		
-		
+			game.load.audio('bgAudio', ['assets/backgroundaudio.mp3', 'assets/backgroundaudio.ogg']);
+			game.load.audio('entranceAudio', ['assets/entranceaudio.mp3', 'assets/entranceaudio.ogg']);
 		
 		
 		
@@ -241,6 +255,9 @@ window.onload = function() {
 		create: function () 
 		{
 			
+			bgAudio = game.add.audio('bgAudio');
+			bgAudio.play();
+			entranceAudio = game.add.audio('entranceAudio'); 
 			game.physics.startSystem(Phaser.Physics.P2JS); 
 
 			background = game.add.sprite(0, 0, 'background');
@@ -350,6 +367,7 @@ window.onload = function() {
 			charTimer = 10000;
 		    chibiRandom = Phaser.ArrayUtils.getRandomItem(chibiArray); 
 		    chibiRandom.alpha = 1; 
+		    entranceAudio.play();
 					
 			//creating requests
 			bubble = game.add.sprite(407, 70, 'bubble'); 
@@ -424,6 +442,8 @@ window.onload = function() {
 			bottom2middle.onDown.add(function() {closeCage(cagebottommiddle); checking = false;});
 			bottom3right.onDown.add(function() {closeCage(cagebottomright); checking = false;});
 
+			
+			audioActive = setInterval(updateAudio, 144000); 
 			
 		},
 		
