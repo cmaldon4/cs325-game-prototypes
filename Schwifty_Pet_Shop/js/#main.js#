@@ -17,6 +17,7 @@ window.onload = function() {
     
     var background, animatedcat, animecat, animdog, animpig, animfox, animredpanda, animpanda, animham, animturtle, animbunny; 
     var cageArray, cagetopleft, cagetopmiddle, cagetopright, cagemiddleleft, cagemiddlemiddle, cagemiddleright, cagebottomleft, cagebottommiddle, cagebottomright; 
+    cages = {
     var chibiArray, chibi1, chibi2, chibi3, chibi4, chibi5, chibi6, chibi7, chibi8, chibi9, chibi10; 
     var animalArray, bubble, cat, dog, pig, hamster, turtle, fox, redpanda, panda, bunny; 
     var gameTimer, charTimer, animalTimer;
