@@ -22,17 +22,20 @@ window.onload = function() {
     var gameTimer, charTimer, animalTimer;
     var lives, money; 
     var chibiRandom, cageRandom, animalRandom;
-    var booleanTL = false;
-    var booleanTM = false;
-    var booleanTR = false;
-    var booleanML = false;
-    var booleanMM = false;
-    var booleanMR = false; 
-    var booleanBL = false;
-    var booleanBM = false; 
-    var booleanBR = false;
-    var cageTimerArray, tlTimer, tmTimer, trTimer, mlTimer, mmTimer, mrTimer, blTimer, bmTimer, brTimer;
-    var booleanArray, cageIndex; 
+    var tlTimer = 0;
+    var tmTimer = 1;
+    var trTimer = 2;
+    var mlTimer = 3; 
+    var mmTimer = 4; 
+    var mrTimer = 5;
+    var blTimer = 6; 
+    var bmTimer = 7; 
+    var brTimer = 8;
+    var cageTimerArray;
+    var booleanArray, cageIndex;
+    
+    var correct = false;
+
     function createChar()
     {
     	chibiRandom.alpha = 0; 
@@ -49,31 +52,63 @@ window.onload = function() {
 		animalRandom.alpha = 1; 
 	    openCage();
 		animalTimer = game.time.now + 3000; 
+		//console.log(animalArray.indexOf(animalRandom)); 
 		
 	}
 	function openCage()
 	{
 		//true is open false is closed
 		//set the state, timer, and visual of corresp. cage
-		cageRandom = Phaser.ArrayUtils.getRandomItem(cageArray); 
-		cageIndex = cageArray.indexOf(cageRandom); 
+		cageIndex = Math.floor((Math.random() * 9));
 		if(booleanArray[cageIndex] == false)
 		{
-			cageRandom.alpha = 0; 	
-			cageTimerArray[cageIndex] = game.time.now + 1500;				
+			cageArray[cageIndex].alpha = 0; 	
+			cageTimerArray[cageIndex] = game.time.now + 1200;				
 			booleanArray[cageIndex] = true; 	
 		}
-		console.log(tlTimer); 
+		
 		//the door is open, the game knows the door is open, there is a 1.5s timer
 	}
 	function closeCage(location)
 	{
 		location.alpha = 1; 
-		cageIndex = cageArray.indexOf(location); 
-		cageTimerArray[cageIndex] = -5; 
-		booleanArray[cageIndex] = false; 
+		var tempCageIndex = cageArray.indexOf(location); 
+		cageTimerArray[tempCageIndex] = -5; 
+		booleanArray[tempCageIndex] = false; 
 	}
     
+	function checkGameState(location)
+	{
+		correct = false; 
+		var tCageIndex = cageArray.indexOf(location); 
+		if(animalRandom.alpha == 1)
+		{
+			if(tCageIndex == animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == true)
+			{
+				correct = true; 
+			}
+			else if(tCageIndex != animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == false)
+			{ 
+				correct = true; 
+			}
+			else
+			{
+				correct = false; 
+			}
+		}
+		else
+		{
+			if(booleanArray[tCageIndex] == false)
+			{
+				correct = true;
+			}
+			else
+			{
+				correct = false; 
+			}
+		}
+		console.log(correct); 
+	}
     var BasicGame = function (game) {};
     BasicGame.Boot = function (game) {};
     BasicGame.Boot.prototype = 
@@ -213,12 +248,12 @@ window.onload = function() {
 			
 
 
-			cageTimerArray = [tlTimer, tmTimer, trTimer, mlTimer, mmTimer, mrTimer, blTimer, bmTimer, brTimer];
+			cageTimerArray = [-5, -5, -5, -5, -5, -5, -5, -5, -5];
 			//updateTimer(); 
 			
 
 			
-			booleanArray = [booleanTL, booleanTM, booleanTR, booleanML, booleanMM, booleanMR, booleanBL, booleanBM, booleanBR]; 
+			booleanArray = [false, false, false, false, false, false, false, false, false]; 
 
 			
 			//creating chibis
@@ -294,41 +329,105 @@ window.onload = function() {
 			{
 				createAnimal();
 			}
-			if(game.time.now >= tlTimer && tlTimer != -5)
+			if(game.time.now >= cageTimerArray[tlTimer] && cageTimerArray[tlTimer] != -5)
 			{
-				closeCage(cagetopleft);	
+				if(game.time.now >= cageTimerArray[tlTimer]+600)
+				{
+					closeCage(cagetopleft);	
+				}
+				else
+				{
+					checkGameState(cagetopleft);
+				}
+				
 			}
-			if(game.time.now >= tmTimer && tmTimer != -5)
+			if(game.time.now >= cageTimerArray[tmTimer] && cageTimerArray[tmTimer] != -5)
 			{
-				closeCage(cagetopmiddle);
+				if(game.time.now >= cageTimerArray[tmTimer]+600)
+				{
+					closeCage(cagetopmiddle);				
+				}
+				else
+				{
+					checkGameState(cagetopmiddle);
+				}				
 			}
-			if(game.time.now >= trTimer && trTimer != -5)
+			if(game.time.now >= cageTimerArray[trTimer] && cageTimerArray[trTimer] != - 5)
 			{
-				closeCage(cagetopright);
+				if(game.time.now >= cageTimerArray[trTimer]+600)
+				{
+					closeCage(cagetopright);				
+				}
+				else
+				{
+					checkGameState(cagetopright);
+				}				
 			}
-			if(game.time.now >= mlTimer && mlTimer != -5)
+			if(game.time.now >= cageTimerArray[mlTimer] && cageTimerArray[mlTimer] != - 5)
 			{
-				closeCage(cagemiddleleft);
+				if(game.time.now >= cageTimerArray[mlTimer]+600)
+				{
+					closeCage(cagemiddleleft);
+				}
+				else
+				{
+					checkGameState(cagemiddleleft);
+				}				
 			}
-			if(game.time.now >= mmTimer && mmTimer != -5)
+			if(game.time.now >= cageTimerArray[mmTimer] && cageTimerArray[mmTimer] != - 5)
 			{
-				closeCage(cagemiddlemiddle);
+				if(game.time.now >= cageTimerArray[mmTimer]+600)
+				{
+					closeCage(cagemiddlemiddle);				
+				}
+				else
+				{
+					checkGameState(cagemiddlemiddle);
+				}					
 			}
-			if(game.time.now >= mrTimer && mrTimer != -5)
+			if(game.time.now >= cageTimerArray[mrTimer] && cageTimerArray[mrTimer] != - 5)
 			{
-				closeCage(cagemiddleright);
+				if(game.time.now >= cageTimerArray[mrTimer]+600)
+				{
+					closeCage(cagemiddleright);
+				}
+				else
+				{
+					checkGameState(cagemiddleright);
+				}					
 			}
-			if(game.time.now >= blTimer && blTimer != -5)
+			if(game.time.now >= cageTimerArray[blTimer] && cageTimerArray[blTimer] != - 5)
 			{
-				closeCage(cagebottomleft);
+				if(game.time.now >= cageTimerArray[blTimer]+600)
+				{
+					closeCage(cagebottomleft);				
+				}
+				else
+				{
+					checkGameState(cagebottomleft);
+				}					
 			}
-			if(game.time.now >= bmTimer && bmTimer != -5)
+			if(game.time.now >= cageTimerArray[bmTimer] && cageTimerArray[bmTimer] != - 5)
 			{
-				closeCage(cagebottommiddle);	
+				if(game.time.now >= cageTimerArray[bmTimer]+600)
+				{
+					closeCage(cagebottommiddle);		
+				}
+					else
+				{
+					checkGameState(cagebottommiddle);
+				}				
 			}
-			if(game.time.now >= brTimer && brTimer != -5)
+			if(game.time.now >= cageTimerArray[brTimer] && cageTimerArray[brTimer] != - 5)
 			{
-				closeCage(cagebottomright);
+				if(game.time.now >= cageTimerArray[brTimer]+600)
+				{
+					closeCage(cagebottomright);
+				}
+				else
+				{
+					checkGameState(cagebottomright);
+				}					
 				
 			}
 			//openCage(); 
