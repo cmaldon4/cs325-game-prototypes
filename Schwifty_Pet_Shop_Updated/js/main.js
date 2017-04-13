@@ -20,7 +20,8 @@ window.onload = function() {
     var chibiArray, chibi1, chibi2, chibi3, chibi4, chibi5, chibi6, chibi7, chibi8, chibi9, chibi10; 
     var animalArray, bubble, cat, dog, pig, hamster, turtle, fox, redpanda, panda, bunny; 
     var gameTimer, charTimer, animalTimer;
-    var lives, countLives, life; 
+    var lives, life, heart, angry; 
+    var countLives = 0; 
     var money = 0; 
     var chibiRandom, cageRandom, animalRandom;
     var tlTimer = 0;
@@ -32,7 +33,7 @@ window.onload = function() {
     var blTimer = 6; 
     var bmTimer = 7; 
     var brTimer = 8;
-    var loseText, messageTimer;
+    var loseText, messageTimer, finText, winText;
     var message = false; 
     var cageTimerArray;
     var booleanArray;
@@ -55,6 +56,8 @@ window.onload = function() {
 	var message3 = false; 
     function createChar()
     {
+    	heart.alpha = 0; 
+    	angry.alpha = 0; 
     	chibiRandom.alpha = 0; 
     	animalRandom.alpha = 0; 
 		chibiRandom = Phaser.ArrayUtils.getRandomItem(chibiArray); 
@@ -67,6 +70,8 @@ window.onload = function() {
 	}
 	function createAnimal()
 	{
+		heart.alpha = 0; 
+		angry.alpha = 0; 
     	animalRandom.alpha = 0; 
 		animalRandom = Phaser.ArrayUtils.getRandomItem(animalArray); 
 		animalRandom.alpha = 1; 
@@ -129,81 +134,91 @@ window.onload = function() {
     
 	function checkGameState(location)
 	{
-
-		var tCageIndex = cageArray.indexOf(location); 
-		console.log(tCageIndex); 
-		console.log("boolean" + booleanArray[tCageIndex]); 
-
-		if(animalRandom.alpha == 1 && gameActive == true)
+		if(countLives < 3)
 		{
-			if(tCageIndex == animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == true)
+			var tCageIndex = cageArray.indexOf(location); 
+			console.log(tCageIndex); 
+			console.log("boolean" + booleanArray[tCageIndex]); 
+	
+			if(animalRandom.alpha == 1 && gameActive == true)
 			{
-				correct = true; 
-				//console.log("correct1" + correct); 	
-				money += 50; 
-				moneyText.kill();   
-				var moneyText = game.add.text((moneyImg.x + 110), (game.world.centerY - 245), ": " + money.toString(), { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
-				
- 
-			}
-			else if(tCageIndex == animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == false)
-			{
-				if(gameActive == true)
+				if(tCageIndex == animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == true)
 				{
-					correct = false; 
-					//console.log("correct1" + correct); 			
-					message1 = true;
-					countLives++; 
-					messageTimer = game.time.now + 1000; 
-					message = true; 					
+					animalRandom.alpha = 0; 
+					heart.alpha = 1; 
+					correct = true; 
+					//console.log("correct1" + correct); 	
+					money += 50; 
+					moneyText.text = ": " + money.toString();
+					moneyText.anchor.setTo(0.5, 0.5); 
+					
+					
+	 
 				}
- 
- 
-			}			
-			else if(tCageIndex != animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == false)
-			{ 
-				correct = true; 
-		//console.log("correct2" + correct); 			
-				
-			}                                             
-			else if(tCageIndex != animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == true)
-			{
-				if(gameActive == true)
+				else if(tCageIndex == animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == false)
 				{
-					correct = false; 
-					message2 = true; 
-					messageTimer = game.time.now + 1000; 										
-					countLives++; 
-					message = true; 					
-				}				
-			}
-		}
-		else if(animalRandom.alpha == 0 && gameActive == true)
-		{
-			if(booleanArray[tCageIndex] == false)
-			{
-				correct = true;
-			}
-			else if(booleanArray[tCageIndex] == true) 
-			{
-				if(gameActive == true)
+					if(gameActive == true)
+					{
+						animalRandom.alpha = 0; 
+						angry.alpha = 1; 
+						correct = false; 
+						//console.log("correct1" + correct); 			
+						message1 = true;
+						messageTimer = game.time.now + 1000; 
+						message = true; 					
+					}
+	 
+	 
+				}			
+				else if(tCageIndex != animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == false)
+				{ 
+					if(gameActive == true)
+					{
+						correct = true; 	
+					}
+			//console.log("correct2" + correct); 			
+					
+				}                                             
+				else if(tCageIndex != animalArray.indexOf(animalRandom) && booleanArray[tCageIndex] == true)
 				{
-					correct = false; 
-					message3 = true;
-					messageTimer = game.time.now + 1000; 										
-					countLives++; 
-					money -= 20; 
-					moneyText.destroy(); 
-					var moneyText = game.add.text((moneyImg.x + 110), (game.world.centerY - 245), ": " + money.toString(), { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
-					message = true; 
+					if(gameActive == true)
+					{
+						correct = false; 
+						message2 = true; 
+						messageTimer = game.time.now + 1000; 										
+						message = true; 					
+					}				
 				}
-
-				
 			}
-		//console.log("correct3" + correct); 			
-		}
+			else if(animalRandom.alpha == 0 && gameActive == true)
+			{
+				if(booleanArray[tCageIndex] == false)
+				{
+					correct = true;
+				}
+				else if(booleanArray[tCageIndex] == true) 
+				{
+					if(gameActive == true)
+					{
+						correct = false; 
+						message2 = true;
+						messageTimer = game.time.now + 1000; 										
+						money -= 20; 
+						moneyText.text = ": " + money.toString();
+						moneyText.anchor.setTo(0.5, 0.5); 
+						message = true; 
+					}
+	
+					
+				}
+			//console.log("correct3" + correct); 			
+			}		
 		console.log(correct); 
-		console.log("boolean" + booleanArray[tCageIndex]); 
+		console.log("boolean" + booleanArray[tCageIndex]); 			
+		}
+
+
+
 		
 	}
 	
@@ -269,7 +284,8 @@ window.onload = function() {
 	   
 			game.load.image('life', 'assets/life.png'); 
 			game.load.image('moneyImg', 'assets/money.png'); 
-			
+			game.load.image('heart', 'assets/heart.png'); 
+			game.load.image('angry', 'assets/angry.png'); 
 			
 			game.load.audio('bgAudio', ['assets/backgroundaudio.mp3', 'assets/backgroundaudio.ogg']);
 			game.load.audio('entranceAudio', ['assets/entranceaudio.mp3', 'assets/entranceaudio.ogg']);
@@ -485,9 +501,29 @@ window.onload = function() {
 			lives.children[0].x = 790; 
 			lives.children[1].x = 845;
 			countLives = 0; 
+			var livesText = game.add.text(875, 0, "LIVES", { font: "25px Covered By Your Grace", fill: "#00000", align: "center"}); 
+			
 			
 			moneyImg = game.add.sprite(25, 10, 'moneyImg');  
 			moneyText = game.add.text((moneyImg.x + 110), (game.world.centerY - 245), ": " + money.toString(), { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+			moneyText.anchor.setTo(0.5, 0.5); 
+			
+			loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+		
+			heart = game.add.sprite(467, 128, 'heart'); 
+			angry = game.add.sprite(465, 140, 'angry'); 			
+			heart.alpha = 0;
+			angry.alpha = 0; 
+			
+			
+			
+			finText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  YOU'VE GONE OUT OF BUSINESS. . .", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 				
+			finText.anchor.setTo(0.5, 0.5);
+			finText.alpha = 0; 
+ 			
+			winText = game.add.text(game.world.centerX, (game.world.centerY-240), "YATTA ! ! !  ALL ANIMALS HAVE HOMES.", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+			winText.anchor.setTo(0.5, 0.5); 		
+			winText.alpha = 0; 
 		},
 		
 		update: function () 
@@ -509,62 +545,46 @@ window.onload = function() {
 			{
 				checking = true; 
 				closeCage(cagetopleft);					
-				
 			}
 			if(game.time.now >= cageTimerArray[tmTimer] && cageTimerArray[tmTimer] != -5)
 			{
 				checking = true;
-				closeCage(cagetopmiddle);				
-						
+				closeCage(cagetopmiddle);						
 			}
 			if(game.time.now >= cageTimerArray[trTimer] && cageTimerArray[trTimer] != - 5)
 			{
 				checking = true;
-				closeCage(cagetopright);				
-								
+				closeCage(cagetopright);									
 			}
 			if(game.time.now >= cageTimerArray[mlTimer] && cageTimerArray[mlTimer] != - 5)
 			{
 				checking = true;
-					closeCage(cagemiddleleft);
-
-								
+				closeCage(cagemiddleleft);					
 			}
 			if(game.time.now >= cageTimerArray[mmTimer] && cageTimerArray[mmTimer] != - 5)
 			{
 				checking = true; 
-					closeCage(cagemiddlemiddle);				
-
-									
+				closeCage(cagemiddlemiddle);										
 			}
 			if(game.time.now >= cageTimerArray[mrTimer] && cageTimerArray[mrTimer] != - 5)
 			{
-					checking = true; 
-					closeCage(cagemiddleright);
-
-								
+				checking = true; 
+				closeCage(cagemiddleright);					
 			}
 			if(game.time.now >= cageTimerArray[blTimer] && cageTimerArray[blTimer] != - 5)
 			{
-					checking = true; 
-					closeCage(cagebottomleft);				
-
-									
+				checking = true; 
+				closeCage(cagebottomleft);										
 			}
 			if(game.time.now >= cageTimerArray[bmTimer] && cageTimerArray[bmTimer] != - 5)
 			{
-					checking = true; 
-					closeCage(cagebottommiddle);		
-
-							
+				checking = true; 
+				closeCage(cagebottommiddle);					
 			}
 			if(game.time.now >= cageTimerArray[brTimer] && cageTimerArray[brTimer] != - 5)
 			{
-					checking = true; 
-					closeCage(cagebottomright);
-
-									
-				
+				checking = true; 
+				closeCage(cagebottomright);
 			}
 			/*//temp here, remove after testing
 		if(start == true)
@@ -584,11 +604,6 @@ window.onload = function() {
 			}
 			//openCage(); 
 			
-			if(game.time.now >= messageTimer && message == true)
-			{
-				loseText.destroy(); 
-				message = false; 
-			}
 			if(game.time.now >= charTimer - 4000 && prevent == false && gameActive == true)
 			{
 				/*var count = 0; 
@@ -612,37 +627,30 @@ window.onload = function() {
 			}
 			if(message1 == true && gameActive == true)
 			{
-				loseText.destroy(); 
-				var loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  YOU'VE LOST A CUSTOMER... ", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+				lives.children[countLives].kill(); 
+				loseText.text = "UH OH ! ! !  YOU'VE LOST A CUSTOMER. . . ";
 				loseText.anchor.setTo(0.5, 0.5); 
-				message1 = false; 
-							
-
+				loseText.alpha = 1; 	
+				game.add.tween(loseText).to( { alpha: 0 }, 400, Phaser.Easing.Linear.None, true, 400, 0, false);				
+				message1 = false;
+				countLives++; 
 			}
 			
 			if(message2 == true && gameActive == true)
 			{
-				loseText.destroy(); 
-				var loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  AN ANIMAL HAS ESCAPED. . . ", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+				lives.children[countLives].kill(); 
+				loseText.text = "UH OH ! ! !  AN ANIMAL HAS ESCAPED. . . ";
 				loseText.anchor.setTo(0.5, 0.5); 	
+				loseText.alpha = 1; 
+				game.add.tween(loseText).to( { alpha: 0 }, 400, Phaser.Easing.Linear.None, true, 400, 0, false);								
 				message2 = false; 
-
-			}	
-			
-			if(message3 == true && gameActive == true)
-			{
-				loseText.destroy(); 
-				var loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  AN ANIMAL HAS ESCAPED . . . ", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
-				loseText.anchor.setTo(0.5, 0.5);  
-				message3 = false; 
-			
+				countLives++; 
 			}		
 			
 			if(countLives >= 3)
 			{
-				loseText.destroy(); 
-				var loseText = game.add.text(game.world.centerX, (game.world.centerY-240), "UH OH ! ! !  YOU'VE GONE OUT OF BUSINESS.", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
-				loseText.anchor.setTo(0.5, 0.5); 
+				loseText.alpha = 0; 
+				finText.alpha = 1; 
 				gameActive = false; 
 				animpig.animations.stop();
 				animdog.animations.stop();
@@ -655,14 +663,15 @@ window.onload = function() {
 				animbunny.animations.stop();			
 				chibiRandom.alpha = 0; 
 				animalRandom.alpha = 0; 
-				bubble.alpha = 0; 				
+				bubble.alpha = 0; 
+				heart.alpha = 0; 
+				angry.alpha = 0; 
 			}
 			
 			if(money >= 450)
 			{
-				loseText.destroy(); 
-				var winText = game.add.text(game.world.centerX, (game.world.centerY-240), "YATTA ! ! !  ALL ANIMALS HAVE HOMES.", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
-				loseText.anchor.setTo(0.5, 0.5); 
+				loseText.alpha = 0; 
+				winText.alpha = 1; 
 				gameActive = false; 
 				animpig.alpha = 0; 
 				animdog.alpha = 0; 
@@ -675,7 +684,9 @@ window.onload = function() {
 				animbunny.alpha = 0; 		
 				chibiRandom.alpha = 0; 
 				animalRandom.alpha = 0; 
-				bubble.alpha = 0; 				
+				bubble.alpha = 0; 	
+				heart.alpha = 0; 
+				angry.alpha = 0; 
 			}			
 		}
     	
