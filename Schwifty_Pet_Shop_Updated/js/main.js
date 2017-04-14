@@ -59,7 +59,7 @@ window.onload = function() {
 	var tutorial = true; 
 	var correctKey = false; 
 	var startGame = true; 
-	var think1, think2; 
+	var think1, think2, sad1, sad2; 
     function createChar()
     {
     	heart.alpha = 0; 
@@ -78,6 +78,14 @@ window.onload = function() {
 	{
 		heart.alpha = 0; 
 		angry.alpha = 0; 
+		if(chibiRandom == chibiArray[1] || chibiRandom == chibiArray[2] || chibiRandom == chibiArray[7])
+		{
+			think1.play(); 
+		}
+		else
+		{
+			think2.play();
+		}
     	animalRandom.alpha = 0; 
 		animalRandom = Phaser.ArrayUtils.getRandomItem(animalArray); 
 		animalRandom.alpha = 1; 
@@ -251,6 +259,15 @@ window.onload = function() {
 				{
 					if(gameActive == true)
 					{
+						
+						if(chibiRandom == chibiArray[1] || chibiRandom == chibiArray[2] || chibiRandom == chibiArray[7])
+						{
+							sad1.play(); 
+						}
+						else
+						{
+							sad2.play();
+						}					
 						animalRandom.alpha = 0; 
 						angry.alpha = 1; 
 						correct = false; 
@@ -386,7 +403,8 @@ window.onload = function() {
 			game.load.audio('entranceAudio', ['assets/entranceaudio.mp3', 'assets/entranceaudio.ogg']);
 			game.load.audio('think1', ['assets/think1.mp3', 'assets/think1.ogg']);
 			game.load.audio('think2', ['assets/think2.mp3', 'assets/think2.ogg']); 
-		
+			game.load.audio('sad1', ['assets/sad1.mp3', 'assets/sad1.ogg']);
+			game.load.audio('sad2', ['assets/sad2.mp3', 'assets/sad2.ogg']); 		
 		
 		
 		
@@ -400,6 +418,10 @@ window.onload = function() {
 		{
 			
 			bgAudio = game.add.audio('bgAudio');
+			think1 = game.add.audio('think1');
+			think2 = game.add.audio('think2'); 
+			sad1 = game.add.audio('sad1');
+			sad2 = game.add.audio('sad2');			
 			bgAudio.play();
 			entranceAudio = game.add.audio('entranceAudio'); 
 			game.physics.startSystem(Phaser.Physics.P2JS); 
