@@ -17,7 +17,8 @@ window.onload = function() {
     
     var cursors, page1, textbox, livesText, loseText, spaceBar;
     var spaceTrue = false; 
-    var bgAudio, fade, success, wrong, life, audioActive; 
+    var bgAudio, fade, success, wrong, life, click, audioActive; 
+    var apos;
     var spaceChar = " "; 
     var counter = 1; 
     var life; 
@@ -115,7 +116,9 @@ window.onload = function() {
         game.load.audio('fade', ['assets/fade.mp3', 'assets/fade.ogg']);
         game.load.audio('wrong', ['assets/wrong.mp3', 'assets/wrong.ogg']);
         game.load.audio('success', ['assets/success.mp3', 'assets/success.ogg']);
-        game.load.audio('life', ['assets/life.mp3', 'assets/life.ogg'];
+        game.load.audio('life', ['assets/life.mp3', 'assets/life.ogg']);
+        game.load.audio('click', ['assets/click.mp3', 'assets/click.ogg']);
+        
 
     }
     
@@ -151,9 +154,9 @@ window.onload = function() {
     function fadeTexts()
     {
     	fade.play();
-    	rate1 = game.rnd.integerInRange(4000, 9000); 
-    	rate2 = game.rnd.integerInRange(4000, 9000); 
-    	rate3 = game.rnd.integerInRange(4000, 9000); 
+    	rate1 = game.rnd.integerInRange(6000, 12000); 
+    	rate2 = game.rnd.integerInRange(6000, 12000); 
+    	rate3 = game.rnd.integerInRange(6000, 12000); 
 
     	if(counter == 6)
     	{
@@ -1072,6 +1075,7 @@ window.onload = function() {
     
     function chooseText(num)
     {
+    	click.play();
     	whichBox = num - 1; 
     	if(num == 1)
     	{
@@ -1150,12 +1154,14 @@ window.onload = function() {
     {
 		bgAudio = game.add.audio('bgAudio');
 		bgAudio.play();
-		audioActive = setInterval(updateAudio, 219000);
+		audioActive = setInterval(updateAudio, 224000);
 		
 		life = game.add.audio('life'); 
 		fade = game.add.audio('fade'); 
 		wrong = game.add.audio('wrong');
 		success = game.add.audio('success');
+		click = game.add.audio('click');
+		
     	
     	game.stage.backgroundColor = 0xffffff; 
     	textbox = game.add.sprite(800, 250, 'textbox');    	
@@ -1165,8 +1171,11 @@ window.onload = function() {
     	cursors = game.input.keyboard.createCursorKeys();
     	spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     	spaceBar.onDown.add(function(){spaceTrue = true; keyPress(" ");});
+    	apos = game.input.keyboard.addKey(Phaser.Keyboard.QUOTES);
+    	apos.onDown.add(function(){keyPress("'");});
     	game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR); 
     	game.input.keyboard.addKeyCapture(Phaser.Keyboard.BACKSPACE); 
+    	game.input.keyboard.addKeyCapture(Phaser.Keyboard.QUOTES);
     	//cursors.left.onDown.add(function() { changePage();});
     	cursors.right.onDown.add(function() { changePage();});
 
