@@ -16,7 +16,7 @@ window.onload = function() {
     var game = new Phaser.Game( 1200, 1270, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
     var cursors, page1, textbox, livesText, loseText;
-    var counter = 1; 
+    var counter = 49; 
     var life; 
     var lives = 3;
     var countLives = 0; 
@@ -24,28 +24,28 @@ window.onload = function() {
     var whichBox, tempb1, tempb2, tempb3, messageButton1, messageButton2, messageButton3, rate1, rate2, rate3, tween1, tween2, tween3; 
     var message6 = ["oww!", "cat!", "ow..."];
     var message7 = ["are lots of", "I was kinda", "the world."];
-    var message8;
-    var message9; 
-    var message11; 
-    var message12; 
-    var message13; 
-    var message14; 
-    var message15; 
-    var message16; 
-    var message19; 
-    var message21; 
-    var message22; 
-    var message25; 
-    var message26; 
-    var message27; 
-    var message29; 
-    var message36; 
-    var message37; 
-    var message38; 
-    var message39; 
-    var message41; 
-    var message49;
-    var message50; 
+    var message8 = ["turn the names.", "together, and", "the spirit..."];
+    var message9 = ["great!", "good!", "you."];  
+    var message11 = ["he was sealed", "set him free...", "when i die."]; 
+    var message12 = ["stuck to it", "it's rice.", "rice?"]; 
+    var message13 = ["forget about it.", "heart-less are you?!", "stuck to."];  
+    var message14 = ["are you ok?", "kind of you.", "i'll take it."]; 
+    var message15 = ["he's a god?", "stupid reiko...", "down here."]; 
+    var message16 = ["i already have one.", "and flowers...?", "here to pray."]; 
+    var message19 = ["he's sleeping again.", "get much sleep...", "what's that?"]; 
+    var message21 = ["good.", "little.", "eh?!"]; 
+    var message22 = ["ha ha,", "think...", "that I"]; 
+    var message25 = ["a bad dream.", "on me!", "human's heart..."];
+    var message26 = ["bulb-boy", "nozuka mountain", "a round mirror."]; 
+    var message27 = ["will get away...", "care of it?", "spirits, too..."];  
+    var message29 = ["hm?", "!!!", "This..."]; 
+    var message36 = ["I managed", "names, but...", "counscious-ness."]; 
+    var message37 = ["for it, though.", "better off as well.", "then I'm glad."];
+    var message38 = ["huh?", "?!", "oh?"]; 
+    var message39 = ["believe in you!", "matter what!", "you are my friend."];
+    var message41 = ["you, you know.", "heard your voice.", "she heard me."]; 
+    var message49 = ["have a fever!", "there's someone I", "today is resting."]; 
+    var message50 = ["the", "continue", "I suppose"];  
     var messages = [false, false, false, false, false, false, message6, message7, message8, message9, false, message11, message12, message13, message14, message15, message16, false, false, message19, false, message21, message22, false, false, message25, message26, message27, false, message29, false, false, false, false, false, false, message36, message37, message38, message39, false, message41, false, false, false, false, false, false, false, message49, message50];
     var bmd, match;
     var word = "";
@@ -122,7 +122,7 @@ window.onload = function() {
 			if(page[counter] == true)
     		{
     			nextPage = false; 
-				game.time.events.add(Phaser.Timer.SECOND * 2, fadeTexts);        					
+				game.time.events.add(Phaser.Timer.SECOND * 1, fadeTexts);        					
     		}
 
  
@@ -175,8 +175,881 @@ window.onload = function() {
     		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
 			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
     	}
-   	
-      	
+    	if(counter == 7)
+    	{
+    		messageButton1 = game.add.sprite(635, 100, 'button'); 
+    		messageButton1.width = 80; 
+    		messageButton1.height = 30; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(635, 100, 'button'); 
+    		tempb1.width = 80; 
+    		tempb1.height = 30; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(537, 170, 'button'); 
+    		messageButton2.width = 80; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(537, 170, 'button'); 
+    		tempb2.width = 80; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(510, 385, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 30; 
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(510, 385, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}    	
+    	if(counter == 8)
+    	{
+    		messageButton1 = game.add.sprite(725, 135, 'button'); 
+    		messageButton1.width = 45; 
+    		messageButton1.height = 100; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(725, 135, 'button'); 
+    		tempb1.width = 45; 
+    		tempb1.height = 100; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(320, 178, 'button'); 
+    		messageButton2.width = 80; 
+    		messageButton2.height = 19; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(320, 178, 'button'); 
+    		tempb2.width = 80; 
+    		tempb2.height = 19; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(70, 372, 'button'); 
+    		messageButton3.width = 100; 
+    		messageButton3.height = 30; 
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(70, 372, 'button'); 
+    		tempb3.width = 100; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}    
+    	if(counter == 9)
+    	{
+    		messageButton1 = game.add.sprite(690, 308, 'button'); 
+    		messageButton1.width = 60; 
+    		messageButton1.height = 20; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(690, 308, 'button'); 
+    		tempb1.width = 60; 
+    		tempb1.height = 20; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(470, 113, 'button'); 
+    		messageButton2.width = 60; 
+    		messageButton2.height = 19; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(470, 113, 'button'); 
+    		tempb2.width = 60; 
+    		tempb2.height = 19; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(205, 379, 'button'); 
+    		messageButton3.width = 100; 
+    		messageButton3.height = 30; 
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(205, 379, 'button'); 
+    		tempb3.width = 100; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}        	
+    	if(counter == 11)
+    	{
+    		messageButton1 = game.add.sprite(140, 145, 'button'); 
+    		messageButton1.width = 150; 
+    		messageButton1.height = 20; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(140, 145, 'button'); 
+    		tempb1.width = 150; 
+    		tempb1.height = 20; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(140, 212, 'button'); 
+    		messageButton2.width = 150; 
+    		messageButton2.height = 20; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(140, 212, 'button'); 
+    		tempb2.width = 150; 
+    		tempb2.height = 20; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(65, 273, 'button'); 
+    		messageButton3.width = 100; 
+    		messageButton3.height = 30; 
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(65, 273, 'button'); 
+    		tempb3.width = 100; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}        	   	
+    	if(counter == 12)
+    	{
+    		messageButton1 = game.add.sprite(670, 185, 'button'); 
+    		messageButton1.width = 50; 
+    		messageButton1.height = 32; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(670, 185, 'button'); 
+    		tempb1.width = 50; 
+    		tempb1.height = 32; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(50, 153, 'button'); 
+    		messageButton2.width = 50; 
+    		messageButton2.height = 40; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(50, 153, 'button'); 
+    		tempb2.width = 50; 
+    		tempb2.height = 40; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(50, 305, 'button'); 
+    		messageButton3.width = 50; 
+    		messageButton3.height = 40; 
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(50, 305, 'button'); 
+    		tempb3.width = 50; 
+    		tempb3.height = 40;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}  
+    	if(counter == 13)
+    	{
+    		messageButton1 = game.add.sprite(700, 153, 'button'); 
+    		messageButton1.width = 60; 
+    		messageButton1.height = 32; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(700, 153, 'button'); 
+    		tempb1.width = 60; 
+    		tempb1.height = 32; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(640, 240, 'button'); 
+    		messageButton2.width = 70; 
+    		messageButton2.height = 50; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(640, 240, 'button'); 
+    		tempb2.width = 70; 
+    		tempb2.height = 50; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(377, 255, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 40; 
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(377, 255, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 40;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}    
+    	if(counter == 14)
+    	{
+    		messageButton1 = game.add.sprite(675, 270, 'button'); 
+    		messageButton1.width = 60; 
+    		messageButton1.height = 55; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(675, 270, 'button'); 
+    		tempb1.width = 60; 
+    		tempb1.height = 55; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(420, 217, 'button'); 
+    		messageButton2.width = 70; 
+    		messageButton2.height = 50; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(420, 217, 'button'); 
+    		tempb2.width = 70; 
+    		tempb2.height = 50; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(35, 290, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 45; 
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(35, 290, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 45;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}  
+    	if(counter == 15)
+    	{
+    		messageButton1 = game.add.sprite(400, 314, 'button'); 
+    		messageButton1.width = 60; 
+    		messageButton1.height = 32; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(400, 314, 'button'); 
+    		tempb1.width = 60; 
+    		tempb1.height = 32; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(70, 173, 'button'); 
+    		messageButton2.width = 70; 
+    		messageButton2.height = 50; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(70, 173, 'button'); 
+    		tempb2.width = 70; 
+    		tempb2.height = 50; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(70, 495, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 30;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(70, 495, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}   
+    	if(counter == 16)
+    	{
+    		messageButton1 = game.add.sprite(585, 485, 'button'); 
+    		messageButton1.width = 75; 
+    		messageButton1.height = 32; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(585, 485, 'button'); 
+    		tempb1.width = 75; 
+    		tempb1.height = 32; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(300, 492, 'button'); 
+    		messageButton2.width = 100; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(300, 492, 'button'); 
+    		tempb2.width = 100; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(65, 494, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 35;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(65, 494, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 35;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}   
+    	if(counter == 19)
+    	{
+    		messageButton1 = game.add.sprite(622, 260, 'button'); 
+    		messageButton1.width = 50; 
+    		messageButton1.height = 50; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(622, 260, 'button'); 
+    		tempb1.width = 50; 
+    		tempb1.height = 50; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(319, 460, 'button'); 
+    		messageButton2.width = 100; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(319, 460, 'button'); 
+    		tempb2.width = 100; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(65, 260, 'button'); 
+    		messageButton3.width = 60; 
+    		messageButton3.height = 50;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(65, 260, 'button'); 
+    		tempb3.width = 60; 
+    		tempb3.height = 50;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}   
+    	if(counter == 21)
+    	{
+    		messageButton1 = game.add.sprite(615, 430, 'button'); 
+    		messageButton1.width = 50; 
+    		messageButton1.height = 20; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(615, 430, 'button'); 
+    		tempb1.width = 50; 
+    		tempb1.height = 20; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(415, 420, 'button'); 
+    		messageButton2.width = 50; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(415, 420, 'button'); 
+    		tempb2.width = 50; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(65, 400, 'button'); 
+    		messageButton3.width = 60; 
+    		messageButton3.height = 50;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(65, 400, 'button'); 
+    		tempb3.width = 60; 
+    		tempb3.height = 50;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}  
+    	if(counter == 22)
+    	{
+    		messageButton1 = game.add.sprite(730, 130, 'button'); 
+    		messageButton1.width = 50; 
+    		messageButton1.height = 50; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(730, 130, 'button'); 
+    		tempb1.width = 50; 
+    		tempb1.height = 50; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(410, 337, 'button'); 
+    		messageButton2.width = 50; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(410, 337, 'button'); 
+    		tempb2.width = 50; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(130, 285, 'button'); 
+    		messageButton3.width = 60; 
+    		messageButton3.height = 30;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(130, 285, 'button'); 
+    		tempb3.width = 60; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}     	
+    	if(counter == 25)
+    	{
+    		messageButton1 = game.add.sprite(715, 322, 'button'); 
+    		messageButton1.width = 50; 
+    		messageButton1.height = 50; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(715, 322, 'button'); 
+    		tempb1.width = 50; 
+    		tempb1.height = 50; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(485, 292, 'button'); 
+    		messageButton2.width = 50; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(485, 290, 'button'); 
+    		tempb2.width = 50; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(260, 330, 'button'); 
+    		messageButton3.width = 60; 
+    		messageButton3.height = 30;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(260, 330, 'button'); 
+    		tempb3.width = 60; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}     
+    	if(counter == 26)
+    	{
+    		messageButton1 = game.add.sprite(660, 222, 'button'); 
+    		messageButton1.width = 50; 
+    		messageButton1.height = 50; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(660, 222, 'button'); 
+    		tempb1.width = 50; 
+    		tempb1.height = 50; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(85, 250, 'button'); 
+    		messageButton2.width = 80; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(85, 250, 'button'); 
+    		tempb2.width = 80; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(172, 495, 'button'); 
+    		messageButton3.width = 60; 
+    		messageButton3.height = 30;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(172, 495, 'button'); 
+    		tempb3.width = 60; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	} 
+    	if(counter == 27)
+    	{
+    		messageButton1 = game.add.sprite(675, 200, 'button'); 
+    		messageButton1.width = 80; 
+    		messageButton1.height = 50; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(675, 200, 'button'); 
+    		tempb1.width = 80; 
+    		tempb1.height = 50; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(575, 320, 'button'); 
+    		messageButton2.width = 80; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(575, 320, 'button'); 
+    		tempb2.width = 80; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(300, 315, 'button'); 
+    		messageButton3.width = 60; 
+    		messageButton3.height = 30;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(300, 315, 'button'); 
+    		tempb3.width = 60; 
+    		tempb3.height = 30;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}      
+    	if(counter == 29)
+    	{
+    		messageButton1 = game.add.sprite(715, 190, 'button'); 
+    		messageButton1.width = 50; 
+    		messageButton1.height = 50; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(715, 190, 'button'); 
+    		tempb1.width = 50; 
+    		tempb1.height = 50; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(670, 420, 'button'); 
+    		messageButton2.width = 70; 
+    		messageButton2.height = 60; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(670, 420, 'button'); 
+    		tempb2.width = 70; 
+    		tempb2.height = 60; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(270, 225, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 50;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(270, 225, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 50;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}       
+    	if(counter == 36)
+    	{
+    		messageButton1 = game.add.sprite(390, 140, 'button'); 
+    		messageButton1.width = 70; 
+    		messageButton1.height = 60; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(390, 140, 'button'); 
+    		tempb1.width = 70; 
+    		tempb1.height = 60; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(390, 290, 'button'); 
+    		messageButton2.width = 70; 
+    		messageButton2.height = 60; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(390, 290, 'button'); 
+    		tempb2.width = 70; 
+    		tempb2.height = 60; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(90, 300, 'button'); 
+    		messageButton3.width = 90; 
+    		messageButton3.height = 70;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(90, 300, 'button'); 
+    		tempb3.width = 90; 
+    		tempb3.height = 70;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}   
+    	if(counter == 37)
+    	{
+    		messageButton1 = game.add.sprite(692, 195, 'button'); 
+    		messageButton1.width = 70; 
+    		messageButton1.height = 30; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(692, 195, 'button'); 
+    		tempb1.width = 70; 
+    		tempb1.height = 30; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(593, 465, 'button'); 
+    		messageButton2.width = 80; 
+    		messageButton2.height = 60; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(593, 465, 'button'); 
+    		tempb2.width = 80; 
+    		tempb2.height = 60; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(350, 190, 'button'); 
+    		messageButton3.width = 70; 
+    		messageButton3.height = 70;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(350, 190, 'button'); 
+    		tempb3.width = 70; 
+    		tempb3.height = 70;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}   
+    	if(counter == 38)
+    	{
+    		messageButton1 = game.add.sprite(730, 130, 'button'); 
+    		messageButton1.width = 40; 
+    		messageButton1.height = 30; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(730, 130, 'button'); 
+    		tempb1.width = 40; 
+    		tempb1.height = 30; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(360, 40, 'button'); 
+    		messageButton2.width = 45; 
+    		messageButton2.height = 55; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(360, 40, 'button'); 
+    		tempb2.width = 45; 
+    		tempb2.height = 55; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(35, 230, 'button'); 
+    		messageButton3.width = 30; 
+    		messageButton3.height = 50;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(35, 230, 'button'); 
+    		tempb3.width = 30; 
+    		tempb3.height = 50;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}    
+    	if(counter == 39)
+    	{
+    		messageButton1 = game.add.sprite(540, 135, 'button'); 
+    		messageButton1.width = 80; 
+    		messageButton1.height = 40; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(540, 135, 'button'); 
+    		tempb1.width = 80; 
+    		tempb1.height = 40; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(100, 310, 'button'); 
+    		messageButton2.width = 70; 
+    		messageButton2.height = 55; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(100, 310, 'button'); 
+    		tempb2.width = 70; 
+    		tempb2.height = 55; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(150, 530, 'button'); 
+    		messageButton3.width = 70; 
+    		messageButton3.height = 70;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(150, 530, 'button'); 
+    		tempb3.width = 70; 
+    		tempb3.height = 70;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}   
+    	if(counter == 41)
+    	{
+    		messageButton1 = game.add.sprite(470, 252, 'button'); 
+    		messageButton1.width = 60; 
+    		messageButton1.height = 40; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(470, 252, 'button'); 
+    		tempb1.width = 60; 
+    		tempb1.height = 40; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(200, 305, 'button'); 
+    		messageButton2.width = 70; 
+    		messageButton2.height = 55; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(200, 305, 'button'); 
+    		tempb2.width = 70; 
+    		tempb2.height = 55; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(50, 170, 'button'); 
+    		messageButton3.width = 70; 
+    		messageButton3.height = 70;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(50, 170, 'button'); 
+    		tempb3.width = 70; 
+    		tempb3.height = 70;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}    
+    	if(counter == 49)
+    	{
+    		messageButton1 = game.add.sprite(635, 238, 'button'); 
+    		messageButton1.width = 60; 
+    		messageButton1.height = 40; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(635, 238, 'button'); 
+    		tempb1.width = 60; 
+    		tempb1.height = 40; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(260, 330, 'button'); 
+    		messageButton2.width = 80; 
+    		messageButton2.height = 40; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(260, 330, 'button'); 
+    		tempb2.width = 80; 
+    		tempb2.height = 40; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(60, 367, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 40;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(60, 367, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 40;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}     
+    	if(counter == 50)
+    	{
+    		messageButton1 = game.add.sprite(500, 138, 'button'); 
+    		messageButton1.width = 60; 
+    		messageButton1.height = 30; 
+			messageButton1.alpha = 0; 
+    		tempb1 = game.add.sprite(500, 138, 'button'); 
+    		tempb1.width = 60; 
+    		tempb1.height = 30; 
+    		tempb1.alpha = 0; 
+    		tempb1.inputEnabled = true;     		
+    		tempb1.events.onInputDown.add(function() {chooseText(1);});	
+			tween1 = game.add.tween(messageButton1).to( { alpha: 1 }, rate1, Phaser.Easing.Linear.None, true);	    		
+ 
+    		messageButton2 = game.add.sprite(480, 195, 'button'); 
+    		messageButton2.width = 80; 
+    		messageButton2.height = 30; 
+			messageButton2.alpha = 0; 
+    		tempb2 = game.add.sprite(480, 195, 'button'); 
+    		tempb2.width = 80; 
+    		tempb2.height = 30; 	
+    		tempb2.alpha = 0; 
+ 			tempb2.inputEnabled = true;    		
+ 			tempb2.events.onInputDown.add(function() {chooseText(2);});	    		
+			tween2 = game.add.tween(messageButton2).to( { alpha: 1 }, rate2, Phaser.Easing.Linear.None, true);	    		
+
+    		messageButton3 = game.add.sprite(590, 512, 'button'); 
+    		messageButton3.width = 80; 
+    		messageButton3.height = 40;
+			messageButton3.alpha = 0; 
+    		tempb3 = game.add.sprite(590, 512, 'button'); 
+    		tempb3.width = 80; 
+    		tempb3.height = 40;  			
+    		tempb3.alpha = 0; 
+    		tempb3.inputEnabled = true;     		
+    		tempb3.events.onInputDown.add(function() {chooseText(3);}); 	    		
+			tween3 = game.add.tween(messageButton3).to( { alpha: 1 }, rate3, Phaser.Easing.Linear.None, true);	    				
+    	}        	
+    	
     }
     
     function chooseText(num)
@@ -285,7 +1158,7 @@ window.onload = function() {
     function update() 
     {
     	this.input.keyboard.removeKeyCapture(Phaser.Keyboard.BACKSPACE);    	
-    	if(messageButton1.alpha == 1 || messageButton2.alpha == 1 || messageButton3.alpha == 1)
+    	/*if(messageButton1.alpha == 1 || messageButton2.alpha == 1 || messageButton3.alpha == 1)
     	{
     		lives--; 
     		livesText.text = "LIVES: " + lives; 
@@ -296,7 +1169,7 @@ window.onload = function() {
     		{
     			nextPage = true; 			
     		}
-    	}    
+    	}    */
     	if(lives <= 0)
     	{
     		nextPage = false; 
