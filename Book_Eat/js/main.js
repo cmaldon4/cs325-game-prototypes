@@ -17,6 +17,7 @@ window.onload = function() {
     
     var cursors, page1, textbox, livesText, loseText, spaceBar;
     var spaceTrue = false; 
+    var bgAudio, fade, success, wrong, life, audioActive; 
     var spaceChar = " "; 
     var counter = 1; 
     var life; 
@@ -109,6 +110,12 @@ window.onload = function() {
         game.load.image( 'page50', 'assets/page50.jpg' );
         game.load.image( 'button', 'assets/button.png'); 
         game.load.image( 'textbox', 'assets/textbox.png'); 
+        
+        game.load.audio('bgAudio', ['assets/bgaudio.mp3', 'assets/bgaudio.ogg']);
+        game.load.audio('fade', ['assets/fade.mp3', 'assets/fade.ogg']);
+        game.load.audio('wrong', ['assets/wrong.mp3', 'assets/wrong.ogg']);
+        game.load.audio('success', ['assets/success.mp3', 'assets/success.ogg']);
+        game.load.audio('life', ['assets/life.mp3', 'assets/life.ogg'];
 
     }
     
@@ -133,9 +140,17 @@ window.onload = function() {
     	
     }
     
+	function updateAudio()
+	{
+		if(!bgAudio.isPlaying)
+		{
+			bgAudio.play(); 
+		}
+	}    
+    
     function fadeTexts()
     {
-
+    	fade.play();
     	rate1 = game.rnd.integerInRange(4000, 9000); 
     	rate2 = game.rnd.integerInRange(4000, 9000); 
     	rate3 = game.rnd.integerInRange(4000, 9000); 
@@ -1100,6 +1115,7 @@ window.onload = function() {
     	match = messages[counter][whichBox]
     	if(word.toUpperCase() === match.toUpperCase())
     	{
+    		success.play();
     		tween1.stop();
     		tween2.stop();
     		tween3.stop();
@@ -1118,15 +1134,13 @@ window.onload = function() {
 
     	else if(word.length > match.length)
     	{
-    		console.log(word.length);
-    		console.log(match.length);       		
+			wrong.play();     		
     		bmd.cls();
     		word = ""; 
     		x = 815; 
     		bmd.context.fillText(word, x, 320); 
     	}
-    	console.log(word);
-    	console.log(match);    	
+ 	
     	
  	
     	
@@ -1134,6 +1148,14 @@ window.onload = function() {
     
     function create() 
     {
+		bgAudio = game.add.audio('bgAudio');
+		bgAudio.play();
+		audioActive = setInterval(updateAudio, 219000);
+		
+		life = game.add.audio('life'); 
+		fade = game.add.audio('fade'); 
+		wrong = game.add.audio('wrong');
+		success = game.add.audio('success');
     	
     	game.stage.backgroundColor = 0xffffff; 
     	textbox = game.add.sprite(800, 250, 'textbox');    	
@@ -1180,6 +1202,7 @@ window.onload = function() {
 
     	if(messageButton1.alpha == 1 || messageButton2.alpha == 1 || messageButton3.alpha == 1)
     	{
+    		life.play();
     		lives--; 
     		livesText.text = "LIVES: " + lives; 
     		messageButton1.alpha = 0; 
