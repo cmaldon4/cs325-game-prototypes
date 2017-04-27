@@ -15,8 +15,10 @@ window.onload = function() {
     
     var game = new Phaser.Game( 1200, 1270, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
-    var cursors, page1, textbox, livesText, loseText;
-    var counter = 49; 
+    var cursors, page1, textbox, livesText, loseText, spaceBar;
+    var spaceTrue = false; 
+    var spaceChar = " "; 
+    var counter = 1; 
     var life; 
     var lives = 3;
     var countLives = 0; 
@@ -114,6 +116,7 @@ window.onload = function() {
     {
     	if(counter <= 49 && nextPage == true)
     	{
+    		word = ""; 
     		bmd.cls();
     		x = 815; 
  			counter++;
@@ -122,7 +125,7 @@ window.onload = function() {
 			if(page[counter] == true)
     		{
     			nextPage = false; 
-				game.time.events.add(Phaser.Timer.SECOND * 1, fadeTexts);        					
+				game.time.events.add(Phaser.Timer.SECOND * 2, fadeTexts);        					
     		}
 
  
@@ -132,10 +135,10 @@ window.onload = function() {
     
     function fadeTexts()
     {
-    	
-    	rate1 = game.rnd.integerInRange(3000, 8000); 
-    	rate2 = game.rnd.integerInRange(3000, 8000); 
-    	rate3 = game.rnd.integerInRange(3000, 8000); 
+
+    	rate1 = game.rnd.integerInRange(4000, 9000); 
+    	rate2 = game.rnd.integerInRange(4000, 9000); 
+    	rate3 = game.rnd.integerInRange(4000, 9000); 
 
     	if(counter == 6)
     	{
@@ -1082,7 +1085,15 @@ window.onload = function() {
     }
     
     function keyPress(char)
-    {
+    {    
+    	/*console.log(char);
+    	console.log(spaceTrue);
+    	/*if(spaceTrue == true)
+    	{
+    		spaceTrue = false; 
+    		char = spaceChar; 
+    	}
+    	console.log(char);*/
     	bmd.context.fillText(char, x, 320); 
     	x += bmd.context.measureText(char).width; 
     	word += char; 
@@ -1104,6 +1115,7 @@ window.onload = function() {
     		}
     		nextPage = true;
     	}
+
     	else if(word.length > match.length)
     	{
     		console.log(word.length);
@@ -1113,11 +1125,13 @@ window.onload = function() {
     		x = 815; 
     		bmd.context.fillText(word, x, 320); 
     	}
+    	console.log(word);
+    	console.log(match);    	
     	
  	
     	
-    	
     }
+    
     function create() 
     {
     	
@@ -1127,8 +1141,13 @@ window.onload = function() {
     	
 
     	cursors = game.input.keyboard.createCursorKeys();
+    	spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    	spaceBar.onDown.add(function(){spaceTrue = true; keyPress(" ");});
+    	game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR); 
+    	game.input.keyboard.addKeyCapture(Phaser.Keyboard.BACKSPACE); 
     	//cursors.left.onDown.add(function() { changePage();});
     	cursors.right.onDown.add(function() { changePage();});
+
     	
     	/*bmd = game.make.bitmapData(1200, 250); 
     	bmd.context.font = '64px Covered By Your Grace';
@@ -1157,8 +1176,9 @@ window.onload = function() {
     
     function update() 
     {
-    	this.input.keyboard.removeKeyCapture(Phaser.Keyboard.BACKSPACE);    	
-    	/*if(messageButton1.alpha == 1 || messageButton2.alpha == 1 || messageButton3.alpha == 1)
+
+
+    	if(messageButton1.alpha == 1 || messageButton2.alpha == 1 || messageButton3.alpha == 1)
     	{
     		lives--; 
     		livesText.text = "LIVES: " + lives; 
@@ -1169,7 +1189,7 @@ window.onload = function() {
     		{
     			nextPage = true; 			
     		}
-    	}    */
+    	}    
     	if(lives <= 0)
     	{
     		nextPage = false; 
