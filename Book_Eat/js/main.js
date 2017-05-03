@@ -1186,7 +1186,7 @@ window.onload = function() {
     	bmd.context.fillText("Hello", 810, 250); 
     	bmd.addToWorld();    */
 		bmd = game.make.bitmapData(1200, 1270);
-		bmd.context.font = '30px Comic Sans';
+		bmd.context.font = '30px';
 		bmd.context.fillStyle = '#000000';
 		bmd.context.fillText("", 815, 320);
 		bmd.addToWorld();    
