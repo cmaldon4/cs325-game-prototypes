@@ -55,6 +55,7 @@ window.onload = function() {
     var word = "";
     var x = 815; 
     var nextPage = true; 
+    var wordText; 
     
     function preload() 
     {
@@ -127,6 +128,7 @@ window.onload = function() {
     	if(counter <= 49 && nextPage == true)
     	{
     		word = ""; 
+    		wordText.text = word; 
     		bmd.cls();
     		x = 815; 
  			counter++;
@@ -1116,6 +1118,7 @@ window.onload = function() {
     	bmd.context.fillText(char, x, 320); 
     	x += bmd.context.measureText(char).width; 
     	word += char; 
+    	wordText.text = word; 
     	match = messages[counter][whichBox]
     	if(word.toUpperCase() === match.toUpperCase())
     	{
@@ -1130,7 +1133,8 @@ window.onload = function() {
     			messageButton3.alpha = 0; 
     			bmd.cls();
     			x = 815; 
-    			word = "CORRECT!"; 		    			
+    			word = "CORRECT!"; 	
+    			wordText.text = word; 
     			bmd.context.fillText(word, x, 320);
     		}
     		nextPage = true;
@@ -1141,6 +1145,7 @@ window.onload = function() {
 			wrong.play();     		
     		bmd.cls();
     		word = ""; 
+    		wordText.text = word; 
     		x = 815; 
     		bmd.context.fillText(word, x, 320); 
     	}
@@ -1192,6 +1197,9 @@ window.onload = function() {
 		bmd.addToWorld();    
 		game.input.keyboard.addCallbacks(this, null, null, keyPress);
 		livesText = game.add.text(900, 0, "LIVES: " + lives, { font: "65px Covered By Your Grace", fill: "#00000", align: "center"}); 
+		
+		wordText = game.add.text(815, 280, "", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
+
 		
    		messageButton1 = game.add.sprite(330, 135, 'button'); 
    		messageButton2 = game.add.sprite(730, 120, 'button'); 
