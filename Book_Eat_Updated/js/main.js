@@ -115,7 +115,7 @@ window.onload = function() {
         game.load.image( 'button', 'assets/button.png'); 
         game.load.image( 'textbox', 'assets/textbox.png'); 
         game.load.image( 'blrect', 'assets/blrect.png'); 
-        game.load.image( 'intro', 'assets/opening.png'); 
+        game.load.image( 'opening', 'assets/opening.png'); 
 
         
         game.load.audio('bgAudio', ['assets/bgaudio.mp3', 'assets/bgaudio.ogg']);
@@ -1217,7 +1217,7 @@ window.onload = function() {
     	
     	game.stage.backgroundColor = 0xffffff; 
     	textbox = game.add.sprite(800, 250, 'textbox'); 
-    	intro = game.add.sprite(0, 0, 'intro');
+    	intro = game.add.sprite(0, 0, 'opening');
     	page1 = game.add.sprite(0, 0, 'page1');
     	page1.alpha = 0;
     	
