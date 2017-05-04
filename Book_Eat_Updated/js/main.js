@@ -51,12 +51,13 @@ window.onload = function() {
     var message49 = ["have a fever!", "there's someone I", "today is resting."]; 
     var message50 = ["the", "continue", "I suppose"];  
     var messages = [false, false, false, false, false, false, message6, message7, message8, message9, false, message11, message12, message13, message14, message15, message16, false, false, message19, false, message21, message22, false, false, message25, message26, message27, false, message29, false, false, false, false, false, false, message36, message37, message38, message39, false, message41, false, false, false, false, false, false, false, message49, message50];
-    var bmd, match;
+    var bmd;
+    var match = "";
     var word = "";
     var x = 815; 
     var nextPage = true; 
     var easy, easytext, medium, mediumtext, hard, hardtext; 
-    var range1, range2, diffclick; 
+    var range1, range2, diffclick, wordText; 
     var end = false; 
     
     function preload() 
@@ -149,6 +150,7 @@ window.onload = function() {
     	if(counter <= 49 && nextPage == true)
     	{
     		word = ""; 
+    		wordText.text = word; 
     		bmd.cls();
     		x = 815; 
  			counter++;
@@ -1161,6 +1163,7 @@ window.onload = function() {
     	bmd.context.fillText(char, x, 320); 
     	x += bmd.context.measureText(char).width; 
     	word += char; 
+    	wordText.text = word; 
     	match = messages[counter][whichBox];
     	if(word.toUpperCase() === match.toUpperCase())
     	{
@@ -1175,7 +1178,8 @@ window.onload = function() {
     			messageButton3.alpha = 0; 
     			bmd.cls();
     			x = 815; 
-    			word = "CORRECT!"; 		    			
+    			word = "CORRECT!"; 	
+    			wordText.text = word; 
     			bmd.context.fillText(word, x, 320);
     			if(counter == 50)
     			{
@@ -1190,6 +1194,7 @@ window.onload = function() {
 			wrong.play();     		
     		bmd.cls();
     		word = ""; 
+    		wordText.text = word; 
     		x = 815; 
     		bmd.context.fillText(word, x, 320); 
     	}
@@ -1226,7 +1231,7 @@ window.onload = function() {
     	spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     	spaceBar.onDown.add(function(){spaceTrue = true; keyPress(" ");});
     	backSpace = game.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
-    	backSpace.onDown.add(function(){bmd.cls(); word = word.substr(0, word.length-1); bmd.context.fillText(word, 815, 320); x = 815 + bmd.context.measureText(word).width;});
+    	backSpace.onDown.add(function(){bmd.cls(); word = word.substr(0, word.length-1); wordText.text = word; bmd.context.fillText(word, 815, 320); x = 815 + bmd.context.measureText(word).width;});
     	apos = game.input.keyboard.addKey(Phaser.Keyboard.QUOTES);
     	apos.onDown.add(function(){keyPress("'");});
     	game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR); 
@@ -1241,13 +1246,15 @@ window.onload = function() {
     	bmd.context.fillStyle = '#ffffff';
     	bmd.context.fillText("Hello", 810, 250); 
     	bmd.addToWorld();    */
-		bmd = game.make.bitmapData(1200, 1270);
-		bmd.context.font = '30px Avenir';
+		bmd = game.make.bitmapData(800, 200);
+		bmd.context.font = '30px Covered By Your Grace';
 		bmd.context.fillStyle = '#000000';
 		bmd.context.fillText("", 815, 320);
 		bmd.addToWorld();    
 		game.input.keyboard.addCallbacks(this, null, null, keyPress);
 		livesText = game.add.text(900, 0, "LIVES: " + lives, { font: "65px Covered By Your Grace", fill: "#00000", align: "center"}); 
+		
+		wordText = game.add.text(815, 280, "", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
 		
    		messageButton1 = game.add.sprite(330, 135, 'button'); 
    		messageButton2 = game.add.sprite(730, 120, 'button'); 
