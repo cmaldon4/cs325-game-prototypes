@@ -56,7 +56,7 @@ window.onload = function() {
     var x = 815; 
     var nextPage = true; 
     var easy, easytext, medium, mediumtext, hard, hardtext; 
-    var range1, range2; 
+    var range1, range2, diffclick; 
     
     function preload() 
     {
@@ -122,6 +122,8 @@ window.onload = function() {
         game.load.audio('success', ['assets/success.mp3', 'assets/success.ogg']);
         game.load.audio('life', ['assets/life.mp3', 'assets/life.ogg']);
         game.load.audio('click', ['assets/click.mp3', 'assets/click.ogg']);
+        game.load.audio('diffclick', ['assets/diffclick.mp3', 'assets/diffclick.ogg']);
+        
         
 
     }
@@ -1109,22 +1111,23 @@ window.onload = function() {
     
     function chooseDifficult(num)
     {   	
+    	diffclick.play();
     	if(num == 1)
     	{
-    		range1 = 10000; 
-    		range2 = 16000; 
+    		range1 = 14000; 
+    		range2 = 18000; 
     	}
     	
     	if(num == 2)
     	{
-    		range1 = 8000; 
+    		range1 = 10000; 
     		range2 = 14000; 
     	}
     	
     	if(num == 3)
     	{
     		range1 = 6000; 
-    		range2 = 12000; 
+    		range2 = 10000; 
     	}
     }
     
@@ -1178,8 +1181,8 @@ window.onload = function() {
     
     function create() 
     {
-    	range1 = 10000; 
-    	range2 = 16000; 
+    	range1 = 14000; 
+    	range2 = 18000; 
 		bgAudio = game.add.audio('bgAudio');
 		bgAudio.play();
 		audioActive = setInterval(updateAudio, 224000);
@@ -1189,6 +1192,7 @@ window.onload = function() {
 		wrong = game.add.audio('wrong');
 		success = game.add.audio('success');
 		click = game.add.audio('click');
+		diffclick = game.add.audio('diffclick');
 		
     	
     	game.stage.backgroundColor = 0xffffff; 
