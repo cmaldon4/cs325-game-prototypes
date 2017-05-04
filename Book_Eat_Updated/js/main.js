@@ -15,12 +15,12 @@ window.onload = function() {
    
     var game = new Phaser.Game( 1200, 1270, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
-    var cursors, page1, textbox, livesText, loseText, spaceBar, backSpace;
+    var cursors, page1, textbox, livesText, loseText, spaceBar, backSpace, intro;
     var spaceTrue = false; 
     var bgAudio, fade, success, wrong, life, click, audioActive; 
     var apos;
     var spaceChar = " "; 
-    var counter = 1; 
+    var counter = 0; 
     var life; 
     var lives = 3;
     var countLives = 0; 
@@ -43,7 +43,7 @@ window.onload = function() {
     var message26 = ["bulb-boy", "nozuka mountain", "a round mirror."]; 
     var message27 = ["will get away...", "care of it?", "spirits, too..."];  
     var message29 = ["hm?", "!!!", "This..."]; 
-    var message36 = ["I managed", "names, but...", "counscious-ness."]; 
+    var message36 = ["I managed", "names, but...", "conscious-ness."]; 
     var message37 = ["for it, though.", "better off as well.", "then I'm glad."];
     var message38 = ["huh?", "?!", "oh?"]; 
     var message39 = ["believe in you!", "matter what!", "you are my friend."];
@@ -57,6 +57,7 @@ window.onload = function() {
     var nextPage = true; 
     var easy, easytext, medium, mediumtext, hard, hardtext; 
     var range1, range2, diffclick; 
+    var end = false; 
     
     function preload() 
     {
@@ -114,7 +115,8 @@ window.onload = function() {
         game.load.image( 'button', 'assets/button.png'); 
         game.load.image( 'textbox', 'assets/textbox.png'); 
         game.load.image( 'blrect', 'assets/blrect.png'); 
-        
+        game.load.image( 'intro', 'assets/intro.png'); 
+
         
         game.load.audio('bgAudio', ['assets/bgaudio.mp3', 'assets/bgaudio.ogg']);
         game.load.audio('fade', ['assets/fade.mp3', 'assets/fade.ogg']);
@@ -130,6 +132,20 @@ window.onload = function() {
     
     function changePage()
     {
+    	if(counter == 0)
+    	{
+    		intro.destroy();
+    		page1.alpha = 1; 
+			livesText.alpha = 1;
+			bmd.alpha = 1; 
+			easy.alpha = 1;
+			easytext.alpha = 1;
+			medium.alpha = 1;
+			mediumtext.alpha = 1;
+			hard.alpha = 1;
+			hardtext.alpha = 1;    		
+				
+    	}
     	if(counter <= 49 && nextPage == true)
     	{
     		word = ""; 
@@ -1161,6 +1177,10 @@ window.onload = function() {
     			x = 815; 
     			word = "CORRECT!"; 		    			
     			bmd.context.fillText(word, x, 320);
+    			if(counter == 50)
+    			{
+    				end = true; 
+    			}
     		}
     		nextPage = true;
     	}
@@ -1196,8 +1216,10 @@ window.onload = function() {
 		
     	
     	game.stage.backgroundColor = 0xffffff; 
-    	textbox = game.add.sprite(800, 250, 'textbox');    	
+    	textbox = game.add.sprite(800, 250, 'textbox'); 
+    	intro = game.add.sprite(0, 0, 'intro');
     	page1 = game.add.sprite(0, 0, 'page1');
+    	page1.alpha = 0;
     	
 
     	cursors = game.input.keyboard.createCursorKeys();
@@ -1246,7 +1268,15 @@ window.onload = function() {
     	hard.inputEnabled = true;     		
     	hard.events.onInputDown.add(function() {chooseDifficult(3);});    	
     	hardtext = game.add.text(1068, 350, "HARD", { font: "30px Covered By Your Grace", fill: "#00000", align: "center"}); 
-
+    	
+    	livesText.alpha = 0;
+    	bmd.alpha = 0; 
+    	easy.alpha = 0;
+    	easytext.alpha = 0;
+    	medium.alpha = 0;
+    	mediumtext.alpha = 0;
+    	hard.alpha = 0;
+    	hardtext.alpha = 0; 
 
     }
     
@@ -1273,6 +1303,10 @@ window.onload = function() {
    		
 			loseText.text = "THE WORM HAS CONSUMED\n TOO MUCH OF THE BOOK . . . \nGAME OVER . . .";
     		
+    	}
+    	if(counter == 50 && lives > 0 && end == true)
+    	{
+    		loseText.text = "YOU'VE REACHED THE END AND \nSAVED THE WORLD!"; 
     	}
     }
 };
