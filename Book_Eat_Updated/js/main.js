@@ -115,7 +115,7 @@ window.onload = function() {
         game.load.image( 'button', 'assets/button.png'); 
         game.load.image( 'textbox', 'assets/textbox.png'); 
         game.load.image( 'blrect', 'assets/blrect.png'); 
-        game.load.image( 'intro', 'assets/intro.png'); 
+        game.load.image( 'intro', 'assets/opening.png'); 
 
         
         game.load.audio('bgAudio', ['assets/bgaudio.mp3', 'assets/bgaudio.ogg']);
