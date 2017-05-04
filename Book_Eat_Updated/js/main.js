@@ -15,7 +15,7 @@ window.onload = function() {
    
     var game = new Phaser.Game( 1200, 1270, Phaser.AUTO, 'game', { preload: preload, create: create, update: update } );
     
-    var cursors, page1, textbox, livesText, loseText, spaceBar;
+    var cursors, page1, textbox, livesText, loseText, spaceBar, backSpace;
     var spaceTrue = false; 
     var bgAudio, fade, success, wrong, life, click, audioActive; 
     var apos;
@@ -1138,10 +1138,11 @@ window.onload = function() {
     		char = spaceChar; 
     	}
     	console.log(char);*/
+
     	bmd.context.fillText(char, x, 320); 
     	x += bmd.context.measureText(char).width; 
     	word += char; 
-    	match = messages[counter][whichBox]
+    	match = messages[counter][whichBox];
     	if(word.toUpperCase() === match.toUpperCase())
     	{
     		success.play();
@@ -1198,6 +1199,8 @@ window.onload = function() {
     	cursors = game.input.keyboard.createCursorKeys();
     	spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     	spaceBar.onDown.add(function(){spaceTrue = true; keyPress(" ");});
+    	backSpace = game.input.keyboard.addKey(Phaser.Keyboard.BACKSPACE);
+    	backSpace.onDown.add(function(){bmd.cls(); word = word.substr(0, word.length-1); bmd.context.fillText(word, 815, 320); x = 815 + bmd.context.measureText(word).width;});
     	apos = game.input.keyboard.addKey(Phaser.Keyboard.QUOTES);
     	apos.onDown.add(function(){keyPress("'");});
     	game.input.keyboard.addKeyCapture(Phaser.Keyboard.SPACEBAR); 
