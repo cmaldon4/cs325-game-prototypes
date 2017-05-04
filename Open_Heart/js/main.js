@@ -168,7 +168,7 @@ window.onload = function() {
     		hand.kill();
     		heart.kill(); 
     		var newHeart = game.add.sprite(235, 520, 'heart');
-    		var winText = game.add.text(game.world.centerX, (game.world.centerY-100), "Heart transplant successful! Congratulations ^ ^", { font: "30px Arial", fill: "#ffffff", align: "center"}); 
+    		var winText = game.add.text(game.world.centerX, (game.world.centerY-100), "Heart transplant successful! \nCongratulations ^ ^", { font: "30px Arial", fill: "#ffffff", align: "center"}); 
     		winText.anchor.setTo(0.5, 0.5); 
     		clearInterval(gameActive); 
     		
